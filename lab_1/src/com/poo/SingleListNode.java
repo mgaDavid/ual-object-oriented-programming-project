@@ -1,5 +1,5 @@
 package com.poo;
-
+//Comentario do Diego!
 public class SingleListNode {
     Object element;
     SingleListNode nextNode;
