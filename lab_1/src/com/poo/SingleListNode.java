@@ -1,5 +1,6 @@
 package com.poo;
 //Comentario do Diego!
+//Comentario do David
 public class SingleListNode {
     Object element;
     SingleListNode nextNode;
@@ -21,6 +22,8 @@ public class SingleListNode {
         this.element = node;
     }
 }
+
+//comentario do Bruno
 
 class Program {
     public static void main(String[] args) {
