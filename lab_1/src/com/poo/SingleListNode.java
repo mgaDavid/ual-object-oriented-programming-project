@@ -22,6 +22,8 @@ public class SingleListNode {
     }
 }
 
+//comments
+
 class Program {
     public static void main(String[] args) {
         SingleListNode node = new SingleListNode("POO", null);
