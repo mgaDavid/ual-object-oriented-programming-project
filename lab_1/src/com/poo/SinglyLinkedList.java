@@ -20,14 +20,51 @@ public class SinglyLinkedList {
     Object getLast() { return this.tail.getElement(); }
 
     public Object get(int position) {
+        if(position >= numElements){
+            return 0;
+        }
         SingleListNode currentNode = head;
         int i = 0;
 
         while(currentNode != null){
             if(i == position){
-                return currentNode.getElement();
+                break;
             }
+            i++;
+            currentNode = currentNode.nextNode;
+        }
+        return currentNode.getElement();
+    }
+
+    public void insertFirst(Object element){
+        if(numElements == 0) {
+            head = new SingleListNode(element, null);
+            tail = this.head;
+        }else{
+            SingleListNode oldHead = head;
+            head = new SingleListNode(element, oldHead);
+        }
+        this.numElements++;
+    }
+
+    public void insertLast(Object element){
+        if(numElements == 0){
+            insertFirst(element);
+        }else{
+            SingleListNode newListNode = new SingleListNode(element, null);
+            tail.nextNode = newListNode;
+            tail = newListNode;
+            numElements++;
         }
     }
+
+    public void insert(Object element, int position){
+        Object oldElement = get(position);
+        if(oldElement == 1){
+
+        }
+    }
+
+
 }
 
