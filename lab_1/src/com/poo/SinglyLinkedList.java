@@ -19,25 +19,30 @@ public class SinglyLinkedList {
 
     Object getLast() { return this.tail.getElement(); }
 
-    public Object get(int position) {
-        if(position >= numElements){
-            return 0;
+    public SingleListNode getNode(int position) throws ArrayIndexOutOfBoundsException{
+        if (position >= numElements){
+            throw new ArrayIndexOutOfBoundsException("Indice fora do intervalo.");
         }
         SingleListNode currentNode = head;
         int i = 0;
 
-        while(currentNode != null){
+        while (currentNode != null){
             if(i == position){
                 break;
             }
             i++;
             currentNode = currentNode.nextNode;
         }
-        return currentNode.getElement();
+        return currentNode;
+    }
+
+    public Object get(int position) {
+        SingleListNode element = getNode(position);
+        return element.getElement();
     }
 
     public void insertFirst(Object element){
-        if(numElements == 0) {
+        if (numElements == 0) {
             head = new SingleListNode(element, null);
             tail = this.head;
         }else{
@@ -48,9 +53,9 @@ public class SinglyLinkedList {
     }
 
     public void insertLast(Object element){
-        if(numElements == 0){
+        if (numElements == 0){
             insertFirst(element);
-        }else{
+        } else{
             SingleListNode newListNode = new SingleListNode(element, null);
             tail.nextNode = newListNode;
             tail = newListNode;
@@ -59,12 +64,14 @@ public class SinglyLinkedList {
     }
 
     public void insert(Object element, int position){
-        Object oldElement = get(position);
-        if(oldElement == 1){
-
+        try{
+            SingleListNode oldElement = getNode(position);
+            SingleListNode newElement = new SingleListNode(element, oldElement.nextNode);
+            oldElement.nextNode = newElement;
+            numElements++;
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
-
-
 }
-
