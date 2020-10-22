@@ -27,6 +27,8 @@ public class SinglyLinkedList {
             if(i == position){
                 return currentNode.getElement();
             }
+            i++;
+            currentNode = currentNode.nextNode;
         }
     }
 }
