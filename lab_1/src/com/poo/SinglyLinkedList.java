@@ -19,15 +19,59 @@ public class SinglyLinkedList {
 
     Object getLast() { return this.tail.getElement(); }
 
-    public Object get(int position) {
+    public SingleListNode getNode(int position) {
+        if(position >= numElements){
+            throw new Exception("Fora do intervalo",ArrayIndexOutOfBoundsException);
+        }
         SingleListNode currentNode = head;
         int i = 0;
 
         while(currentNode != null){
             if(i == position){
-                return currentNode.getElement();
+                break;
             }
+            i++;
+            currentNode = currentNode.nextNode;
+        }
+        return currentNode;
+    }
+
+    public Object get(int position) {
+        SingleListNode element = getNode(position);
+        return element.getElement();
+    }
+
+    public void insertFirst(Object element){
+        if(numElements == 0) {
+            head = new SingleListNode(element, null);
+            tail = this.head;
+        }else{
+            SingleListNode oldHead = head;
+            head = new SingleListNode(element, oldHead);
+        }
+        this.numElements++;
+    }
+
+    public void insertLast(Object element){
+        if(numElements == 0){
+            insertFirst(element);
+        }else{
+            SingleListNode newListNode = new SingleListNode(element, null);
+            tail.nextNode = newListNode;
+            tail = newListNode;
+            numElements++;
+        }
+    }
+
+    public void insert(Object element, int position){
+        try{
+            SingleListNode oldElement = getNode(position);
+            SingleListNode newElement = new SingleListNode(element, oldElement.nextNode);
+            oldElement.nextNode = newElement;
+            numElements++;
+        }
+        catch (Exception e){
+            System.out.println(e);
         }
     }
 }
-
