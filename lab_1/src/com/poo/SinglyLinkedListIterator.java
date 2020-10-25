@@ -6,8 +6,8 @@ package lab_1.src.com.poo;
  * or returning to the beginning
  *
  * @author Bruno Teodoro
- * @author Diego Soares
  * @author David Arco
+ * @author Diego Soares
  * @version 1.0
  * @since 25/10/2020
  */
@@ -35,13 +35,16 @@ public class SinglyLinkedListIterator {
     }
 
     /**
-     * Method to traverse the Linked List and return the next element of the
-     * Linked List
+     * Method to traverse the Linked List and return the next element of the Linked List
+     * If the List is empty, it will return null
      * @return next element of the Linked List
      */
     public Object next() {
-        Object element = currentNode.getElement();
-        currentNode = currentNode.getNext();
+        Object element = null;
+        if (hasNext()){
+            element = currentNode.getElement();
+            currentNode = currentNode.getNext();
+        }
         return element;
     }
 
