@@ -1,4 +1,4 @@
-package com.poo;
+package lab_1.src.com.poo;
 
 public class SinglyLinkedListIterator {
     private SingleListNode head;
