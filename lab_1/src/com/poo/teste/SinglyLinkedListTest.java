@@ -28,9 +28,8 @@ class SinglyLinkedListTest {
     @org.junit.jupiter.api.Test
     void getNode() {
         SinglyLinkedList list = new SinglyLinkedList();
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            list.getNode( 9);
-        });
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.getNode(0));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.getNode(10));
         list.insertFirst("A");
         assertEquals("A", list.getNode(0).getElement());
         assertNull(list.getNode(0).getNext());
@@ -43,9 +42,8 @@ class SinglyLinkedListTest {
     @org.junit.jupiter.api.Test
     void get() {
         SinglyLinkedList list = new SinglyLinkedList();
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            list.get(9);
-        });
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.get(0));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.get(10));
         list.insertFirst("A");
         assertEquals("A", list.get(0));
         list.insertFirst("B");
@@ -76,9 +74,7 @@ class SinglyLinkedListTest {
     @org.junit.jupiter.api.Test
     void insert() {
         SinglyLinkedList list = new SinglyLinkedList();
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-                    list.insert("A", 9);
-        });
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.insert("C", 10));
         list.insert("A",0);
         assertEquals("A", list.get(0));
         list.insert("B",1);
@@ -107,9 +103,7 @@ class SinglyLinkedListTest {
     @org.junit.jupiter.api.Test
     void removeFirst() {
         SinglyLinkedList list = new SinglyLinkedList();
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            list.removeFirst();
-        });
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.removeFirst());
         list.insert("A",0);
         assertTrue(list.removeFirst());
     }
@@ -117,9 +111,7 @@ class SinglyLinkedListTest {
     @org.junit.jupiter.api.Test
     void removeLast() {
         SinglyLinkedList list = new SinglyLinkedList();
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            list.removeLast();
-        });
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.removeLast());
         list.insert("A",0);
         list.insert("B",1);
         assertEquals("B",list.getLast());
@@ -132,9 +124,7 @@ class SinglyLinkedListTest {
     @org.junit.jupiter.api.Test
     void remove() {
         SinglyLinkedList list = new SinglyLinkedList();
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            list.remove(40);
-        });
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.remove(10));
         list.insert("A",0);
         list.insert("B",1);
         list.insert("C",2);
