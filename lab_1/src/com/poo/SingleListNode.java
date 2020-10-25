@@ -5,8 +5,8 @@ package lab_1.src.com.poo;
  * the main method besides other functional methods
  *
  * @author Bruno Teodoro
- * @author Diego Soares
  * @author David Arco
+ * @author Diego Soares
  * @version 1.0
  * @since 25/10/2020
  */
@@ -33,13 +33,13 @@ public class SingleListNode {
 
     /**
      * Method that returns the object value of the Linked List
-     * @return Objeto elemento
+     * @return Object element
      */
     public Object getElement() { return this.element; }
 
     /**
      * Method that returns the pointer to the next element of the Linked List
-     * @return Objeto próximo elemento
+     * @return next Object element
      */
     public SingleListNode getNext() {
         return this.nextNode;
@@ -78,9 +78,9 @@ class Program {
         //newList.insert("B",1);
         //System.out.println(newList.getLast());
         //System.out.println(newList.getArray());
-        SingleListNode node1 = new SingleListNode("A", null);
-        SingleListNode node2 = new SingleListNode("B",null);
-        node1.setNext(node2);
-        System.out.println(node1.getNext().getElement());
+        //SingleListNode node1 = new SingleListNode("A", null);
+        //SingleListNode node2 = new SingleListNode("B",null);
+        //node1.setNext(node2);
+        //System.out.println(node1.getNext().getElement());
     }
 }

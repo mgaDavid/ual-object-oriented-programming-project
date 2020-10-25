@@ -5,8 +5,8 @@ import java.util.ArrayList;
  * on the Linked List.
  * The Linked List will store the variables of the tail, head and number of elements
  *  @author Bruno Teodoro
- *  @author Diego Soares
  *  @author David Arco
+ *  @author Diego Soares
  *  @version 1.0
  *  @since 25/10/2020
  *
@@ -212,6 +212,11 @@ public class SinglyLinkedList {
         }
     }
 
+    /**
+     * This method returns a Singly Linked List Iterator Object
+     * from Class SinglyLinkedListIterator
+     * @return Iterator Object
+     */
     public SinglyLinkedListIterator getIterator(){
         return new SinglyLinkedListIterator(head);
     }
