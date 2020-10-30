@@ -1,4 +1,4 @@
-package lab_1.src.com.poo;
+package com.poo;
 import java.util.ArrayList;
 /**
  *In this class we define the methods for insertion, search and removal
