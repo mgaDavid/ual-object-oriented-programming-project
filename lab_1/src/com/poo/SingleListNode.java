@@ -1,4 +1,4 @@
-package lab_1.src.com.poo;
+package com.poo;
 
 /**
  * In this Class we create the method for the Node of our Linked List
