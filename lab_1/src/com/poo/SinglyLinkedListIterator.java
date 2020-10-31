@@ -1,4 +1,4 @@
-package lab_1.src.com.poo;
+package com.poo;
 
 /**
  * This is the class to iterate the Linked List
