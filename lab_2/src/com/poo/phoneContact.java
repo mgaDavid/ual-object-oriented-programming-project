@@ -18,9 +18,7 @@ public class phoneContact {
         return this.type;
     }
 
-    public void setPhoneNumber(int phoneNumber){
-        this.phoneNumber = phoneNumber;
-    }
+    public void setPhoneNumber(int phoneNumber){ this.phoneNumber = phoneNumber; }
 
     public void setType(String type){
         this.type = type;

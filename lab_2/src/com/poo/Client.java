@@ -11,6 +11,7 @@ public class Client {
     String email;
     phoneContact contact;
 
+
     public Client(String name, idDocument idNumber, Date birthday, String address, String email, phoneContact contact){
         this.name = name;
         this.idNumber = idNumber;
@@ -24,13 +25,11 @@ public class Client {
         return this.name;
     }
 
-    public Object getIdNumber(){
+    public idDocument getIdNumber(){
         return this.idNumber;
     }
 
-    public Object getBirthday(){
-        return this.birthday;
-    }
+    public Object getBirthday(){ return this.birthday; }
 
     public Object getAddress(){
         return this.address;
@@ -40,7 +39,7 @@ public class Client {
         return this.email;
     }
 
-    public Object getContact(){
+    public phoneContact getContact(){
         return this.contact;
     }
 

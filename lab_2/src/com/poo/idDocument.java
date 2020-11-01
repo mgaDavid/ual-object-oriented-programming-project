@@ -2,10 +2,10 @@ package com.poo;
 
 public class idDocument {
 
-    int number;
+    String number;
     String type;
 
-    public idDocument(int number, String type){
+    public idDocument(String number, String type){
         this.number = number;
         this.type = type;
     }

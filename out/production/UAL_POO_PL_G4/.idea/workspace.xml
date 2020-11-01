@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:upstream" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a4c82439-1884-4cd3-afbe-864868e07557" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lab_1/src/com/poo/teste/SingleListNodeTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab_1/src/com/poo/teste/SinglyLinkedListTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/UAL_POO_PL_G4.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UAL_POO_PL_G4.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1/src/com/poo/SingleListNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab_1/src/com/poo/SingleListNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1/src/com/poo/SinglyLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab_1/src/com/poo/SinglyLinkedList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1/src/com/poo/SinglyLinkedListIterator.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab_1/src/com/poo/SinglyLinkedListIterator.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Pull.Settings">
+    <option name="BRANCH" value="master" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1jF7sYwQn6bRSB9IprIsW1JSonf" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="create.test.in.the.same.root" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="lab_1.src.com.poo.teste" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.SingleListNodeTest">
+    <configuration name="Program" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lab_1.src.com.poo.Program" />
+      <module name="UAL_POO_PL_G4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lab_1.src.com.poo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SingleListNodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="UAL_POO_PL_G4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lab_1.src.com.poo.teste.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="lab_1.src.com.poo.teste" />
+      <option name="MAIN_CLASS_NAME" value="lab_1.src.com.poo.teste.SingleListNodeTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SinglyLinkedListTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="UAL_POO_PL_G4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lab_1.src.com.poo.teste.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="lab_1.src.com.poo.teste" />
+      <option name="MAIN_CLASS_NAME" value="lab_1.src.com.poo.teste.SinglyLinkedListTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="lab_1.src.com.poo in UAL_POO_PL_G4" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="UAL_POO_PL_G4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lab_1.src.com.poo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="lab_1.src.com.poo" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.SingleListNodeTest" />
+        <item itemvalue="JUnit.SinglyLinkedListTest" />
+        <item itemvalue="Application.Program" />
+        <item itemvalue="JUnit.lab_1.src.com.poo in UAL_POO_PL_G4" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a4c82439-1884-4cd3-afbe-864868e07557" name="Default Changelist" comment="" />
+      <created>1603388194367</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1603388194367</updated>
+      <workItem from="1603388196609" duration="20310000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="690" y="295" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1603581020986">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="295" key="#com.intellij.ide.util.PackageChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1603581020986" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1603591691405">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1603591691405" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1603591691405">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1603591691405" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1603591691405">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1603591691405" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1603591691405">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1603591691405" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1603581492819">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1603581492819" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1603581492819">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1603581492819" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1603581492819">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1603581492819" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1603581492819">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1603581492819" />
+    <state x="461" y="165" key="SettingsEditor" timestamp="1603580267011">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1603580267011" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1603578699800">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1603578699800" />
+    <state x="664" y="412" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1603581121892">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="664" y="412" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1920.1040@0.0.1920.1040" timestamp="1603581121892" />
+    <state x="731" y="206" width="458" height="508" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1603591500368">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="731" y="206" width="458" height="508" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1603591500368" />
+    <state x="623" y="239" width="672" height="678" key="search.everywhere.popup" timestamp="1603591489001">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="239" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1603591489001" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/UAL_POO_PL_G4$lab_1_src_com_poo_in_UAL_POO_PL_G4.ic" NAME="lab_1.src.com.poo in UAL_POO_PL_G4 Coverage Results" MODIFIED="1603590153737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>lab_1.src.com.poo.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/UAL_POO_PL_G4$SinglyLinkedListTest.ic" NAME="SinglyLinkedListTest Coverage Results" MODIFIED="1603591691385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>lab_1.src.com.poo.teste.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/UAL_POO_PL_G4$Program.ic" NAME="Program Coverage Results" MODIFIED="1603575556816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>lab_1.src.com.poo.*</FILTER>
+    </SUITE>
+  </component>
+</project>

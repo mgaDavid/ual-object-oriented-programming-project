@@ -17,7 +17,7 @@ public class Operation {
         this.operationType = operationType;
     }
 
-    public Object getAccount(){
+    public Account getAccount(){
         return this.account;
     }
 
@@ -29,7 +29,7 @@ public class Operation {
         return this.date;
     }
 
-    public Object getOperationType(){
+    public operationType getOperationType(){
         return this.operationType;
     }
 
