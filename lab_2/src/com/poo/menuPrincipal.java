@@ -1,10 +1,17 @@
 package com.poo;
 
+import jdk.incubator.foreign.ValueLayout;
+
 import java.text.ParseException;
+import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.ExecutionException;
+import java.text.DecimalFormat;
+import java.math.BigDecimal;
+
 
 public class menuPrincipal {
     ArrayList<Client> clients = new ArrayList<>();
@@ -174,7 +181,14 @@ public class menuPrincipal {
                 Client actualClient = this_client;
 
                 Account newAccount = new Account(accounts.size() + 1, actualClient);
-                System.out.println("Sua conta foi criada com sucesso, caso ");
+                accounts.add(newAccount);
+                System.out.println("Sua conta foi criada com sucesso. Deseja fazer um depósito inicial? (S/N)");
+                String response = scan.nextLine();
+                if (response.equals("S")){
+                    System.out.println("Introduza o valor a ser depositado: (até 4 casas decimais)");
+                    double amount = checkAmount(scan.nextLine());
+                    newAccount.setBalance(amount);
+                }
                 goodTogo = true;
                 break;
             }
@@ -182,7 +196,24 @@ public class menuPrincipal {
 
         if (!goodTogo){
             System.out.println("Cliente não cadastrado, por favor cadastre o cliente antes de abrir a conta.");
-            returnMenu();
+        }
+        returnMenu();
+    }
+
+    public double checkAmount(String amount) {
+        try {
+
+            double deposit = Double.parseDouble(amount);
+            boolean fail = (BigDecimal.valueOf(deposit).scale() > 4);
+
+            if (fail){
+                throw new Exception();
+            }
+
+            return deposit;
+        } catch (Exception e){
+            System.out.println("Valor inválido, insira outro valor (o valor inserido deve conter até 4 casas decimais):");
+            return checkAmount(scan.nextLine());
         }
     }
 }

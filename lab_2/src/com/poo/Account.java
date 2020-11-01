@@ -55,7 +55,7 @@ public class Account {
         this.otherClients = otherClients;
     }
 
-    public void setBalance(int balance){
+    public void setBalance(double balance){
         this.balance = balance;
     }
 
