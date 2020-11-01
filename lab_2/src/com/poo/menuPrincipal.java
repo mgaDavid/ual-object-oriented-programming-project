@@ -1,7 +1,5 @@
 package com.poo;
 
-import java.net.ServerSocket;
-import java.net.SocketOption;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,26 +8,27 @@ import java.text.SimpleDateFormat;
 
 public class menuPrincipal {
     ArrayList<Client> clients = new ArrayList<>();
+    ArrayList<Account> accounts = new ArrayList<>();
     Scanner scan = new Scanner(System.in);
     String choice;
 
     public void menu() {
         Boolean quit = false;
 
-        System.out.println("1 - Registo de cliente");
-        System.out.println("2 - Alteração de dados de cliente");
-        System.out.println("3 - Registo de conta");
-        System.out.println("4 - Registo de movimento");
-        System.out.println("5 - Consulta de saldo de conta");
+        System.out.println("RC - Registo de cliente");
+        System.out.println("AC - Alteração de dados de cliente");
+        System.out.println("NC - Registo de conta");
+        System.out.println("M - Registo de movimento");
+        System.out.println("SC - Consulta de saldo de conta");
 
         choice = scan.nextLine();
 
         switch (choice) {
-            case "1" -> clientRecord();
-            case "2" -> changeRecord();
-            case "3" -> System.out.println("3");
-            case "4" -> System.out.println("4");
-            case "5" -> System.out.println("5");
+            case "rc" -> clientRecord();
+            case "ac" -> changeRecord();
+            case "nc" -> System.out.println("3");
+            case "m" -> System.out.println("4");
+            case "sc" -> System.out.println("5");
             default -> System.out.println("opção inválida, tente novamente.");
         }
 
@@ -85,6 +84,7 @@ public class menuPrincipal {
             String email = scan.nextLine();
 
             phoneContact contact = valContact();
+            clients.add(new Client(name, idNumber, birthday, address, email, contact));
         }
     }
 
@@ -93,8 +93,7 @@ public class menuPrincipal {
         String birthday = scan.nextLine();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         try{
-            Date date = format.parse(birthday);
-            return date;
+            return format.parse(birthday);
         } catch (ParseException e){
             System.out.println("O formato de data inserido está incorreto, por favor tente novamente");
             return valDate();
@@ -108,8 +107,7 @@ public class menuPrincipal {
             int phoneNumber = Integer.parseInt(phoneString);
             System.out.println("Introduza o tipo contacto");
             String contactType = scan.nextLine();
-            phoneContact phone = new phoneContact(phoneNumber, contactType);
-            return phone;
+            return new phoneContact(phoneNumber, contactType);
         }catch (Exception e){
             System.out.println("O numero está incorreto, por favor apenas numeros");
             return valContact();
@@ -164,5 +162,28 @@ public class menuPrincipal {
                 returnMenu();
             }
         }
+    }
+
+    public void accountRecord(){
+        System.out.println("Introduza numero de identificação do cliente");
+        String numStrCliente = scan.nextLine();
+
+        boolean goodTogo = false;
+        for (Client this_client: clients) {
+            if (this_client.getIdNumber().getNumber() == numStrCliente) {
+                Client actualClient = this_client;
+                goodTogo = true;
+                break;
+            }
+        }
+
+        if (!goodTogo){
+            System.out.println("Cliente não cadastrado, por favor cadastre o cliente antes de abrir a conta.");
+            returnMenu();
+        } else {
+            Account newAccount = new Account()
+            actualClient
+        }
+
     }
 }
