@@ -27,11 +27,11 @@ public class Account {
         this.overdraft = false;
     }
 
-    public Object getAccountNumber(){
+    public int getAccountNumber(){
         return this.accountNumber;
     }
 
-    public Object getMainClient(){
+    public Client getMainClient(){
         return mainClient;
     }
 
@@ -61,5 +61,20 @@ public class Account {
 
     public void setOverdraft(boolean overdraft){
         this.overdraft = overdraft;
+    }
+
+    public boolean belongToClient(Client client){
+        if (client.getIdNumber().getNumber() == mainClient.getIdNumber().getNumber()){
+            return true;
+        }
+
+        if (otherClients.size() > 0){
+            for (Client dependent: otherClients){
+                if (dependent.getIdNumber().getNumber() == client.getIdNumber().getNumber()){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
