@@ -172,6 +172,9 @@ public class menuPrincipal {
         for (Client this_client: clients) {
             if (this_client.getIdNumber().getNumber() == numStrCliente) {
                 Client actualClient = this_client;
+
+                Account newAccount = new Account(accounts.size() + 1, actualClient);
+                System.out.println("Sua conta foi criada com sucesso, caso ");
                 goodTogo = true;
                 break;
             }
@@ -180,10 +183,6 @@ public class menuPrincipal {
         if (!goodTogo){
             System.out.println("Cliente não cadastrado, por favor cadastre o cliente antes de abrir a conta.");
             returnMenu();
-        } else {
-            Account newAccount = new Account()
-            actualClient
         }
-
     }
 }

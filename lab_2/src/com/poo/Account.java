@@ -19,6 +19,14 @@ public class Account {
         this.overdraft = overdraft;
     }
 
+    public Account(int accountNumber, Client mainClient, ){
+        this.accountNumber = accountNumber;
+        this.mainClient = mainClient;
+        this.otherClients = new ArrayList<>();
+        this.balance = 0;
+        this.overdraft = false;
+    }
+
     public Object getAccountNumber(){
         return this.accountNumber;
     }
