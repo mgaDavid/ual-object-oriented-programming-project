@@ -19,7 +19,7 @@ public class Account {
         this.overdraft = overdraft;
     }
 
-    public Account(int accountNumber, Client mainClient, ){
+    public Account(int accountNumber, Client mainClient){
         this.accountNumber = accountNumber;
         this.mainClient = mainClient;
         this.otherClients = new ArrayList<>();
