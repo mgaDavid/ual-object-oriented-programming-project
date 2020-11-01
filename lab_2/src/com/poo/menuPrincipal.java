@@ -1,5 +1,6 @@
 package com.poo;
-
+//COMENTÁRIO DO DIEGO!!
+//Comentário do Bruno
 import java.net.ServerSocket;
 import java.net.SocketOption;
 import java.text.ParseException;
@@ -25,23 +26,12 @@ public class menuPrincipal {
         choice = scan.nextLine();
 
         switch (choice) {
-            case "1":
-                clientRecord();
-                break;
-            case "2":
-                System.out.println("2");
-                break;
-            case "3":
-                System.out.println("3");
-                break;
-            case "4":
-                System.out.println("4");
-                break;
-            case "5":
-                System.out.println("5");
-                break;
-            default:
-                System.out.println("opção inválida, tente novamente.");
+            case "1" -> clientRecord();
+            case "2" -> System.out.println("2");
+            case "3" -> System.out.println("3");
+            case "4" -> System.out.println("4");
+            case "5" -> System.out.println("5");
+            default -> System.out.println("opção inválida, tente novamente.");
         }
 
         returnMenu();
