@@ -1,6 +1,5 @@
 package com.poo;
-//COMENTÁRIO DO DIEGO!!
-//Comentário do Bruno
+
 import java.net.ServerSocket;
 import java.net.SocketOption;
 import java.text.ParseException;
@@ -27,7 +26,7 @@ public class menuPrincipal {
 
         switch (choice) {
             case "1" -> clientRecord();
-            case "2" -> System.out.println("2");
+            case "2" -> changeRecord();
             case "3" -> System.out.println("3");
             case "4" -> System.out.println("4");
             case "5" -> System.out.println("5");
@@ -103,7 +102,7 @@ public class menuPrincipal {
     }
 
     public phoneContact valContact(){
-        System.out.println("Introdua o numero de telefone");
+        System.out.println("Introduza o numero de telefone");
         String phoneString = scan.nextLine();
         try{
             int phoneNumber = Integer.parseInt(phoneString);
@@ -114,6 +113,56 @@ public class menuPrincipal {
         }catch (Exception e){
             System.out.println("O numero está incorreto, por favor apenas numeros");
             return valContact();
+        }
+    }
+
+    public void changeRecord(){
+        System.out.println("Introduza o numero de identificação do cliente");
+        String document_number = scan.nextLine();
+
+        for (Client this_client : clients) {
+            idDocument this_client_id = this_client.getIdNumber();
+            if (this_client_id.getNumber() == document_number) {
+                System.out.println("1 - Nome do cliente");
+                System.out.println("2 - Morada");
+                System.out.println("3 - email");
+                System.out.println("4 - Contacto");
+                System.out.println("5 - Sair para menu principal");
+
+                choice = scan.nextLine();
+
+                switch (choice) {
+                    case "1" -> {
+                        System.out.println("Introduza o novo nome");
+                        String novoNome = scan.nextLine();
+                        this_client.setName(novoNome);
+                    }
+                    case "2" -> {
+                        System.out.println("Introduza a nova morada");
+                        String novaMorada = scan.nextLine();
+                        this_client.setAddress(novaMorada);
+                    }
+                    case "3" -> {
+                        System.out.println("Introduza o novo email");
+                        String novoEmail = scan.nextLine();
+                        this_client.setEmail(novoEmail);
+                    }
+                    case "4" -> {
+                        System.out.println("Introduza o tipo de contacto");
+                        String novoTipoContacto = scan.nextLine();
+                        System.out.println("Introduza o numero de telefone");
+                        String novoStrTelefone = scan.nextLine();
+                        int novoNumTelefone = Integer.parseInt(novoStrTelefone);
+                        phoneContact novoContacto = new phoneContact(novoNumTelefone, novoTipoContacto);
+                        this_client.setContact(novoContacto);
+                    }
+                    case "5" -> {
+                    }
+                }
+                }else {
+                System.out.println("Cliente não existe na base de dados.");
+                returnMenu();
+            }
         }
     }
 }
