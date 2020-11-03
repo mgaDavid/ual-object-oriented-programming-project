@@ -69,4 +69,23 @@ public class Client {
 
     public void addAccount(Account account){ myAccounts.add(account); }
 
+    public Account getAccount(int accountId){
+        Account thisAccount = myAccounts.get(0);
+        for (Account account: myAccounts){
+            if (account.getAccountNumber() == accountId){
+                thisAccount = account;
+                break;
+            }
+        }
+        return thisAccount;
+    }
+
+    public boolean isMyAccount(int accountId){
+        for (Account account: myAccounts){
+            if (account.getAccountNumber() == accountId){
+                return true;
+            }
+        }
+        return false;
+    }
 }

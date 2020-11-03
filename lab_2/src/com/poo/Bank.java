@@ -13,6 +13,7 @@ public class Bank {
     private ArrayList<Client> clients = new ArrayList<>();
     private Scanner scan = new Scanner(System.in);
     private String choice;
+    private int accountsCounter;
 
     public void menu() {
         System.out.println("RC - Registo de cliente");
@@ -35,7 +36,7 @@ public class Bank {
         returnMenu();
     }
 
-    public void returnMenu(){
+    private void returnMenu(){
         System.out.println("Deseja retornar ao menu principal? (S/N)");
         choice = scan.nextLine();
         if (choice.equals("S")){
@@ -48,30 +49,13 @@ public class Bank {
         }
     }
 
-    public void clientRecord(){
-        System.out.println("Introduza o tipo do documento:");
-        String documentType = scan.nextLine();
-        System.out.println("Introduza o número do documento:");
-        String document_number = scan.nextLine();
+    private void clientRecord(){
+        IdDocument document = askDocument();
 
-        boolean goodToRecord = true;
-
-        if (clients.size() > 0){
-            for (Client thisClient : clients) {
-                IdDocument this_client_id = thisClient.getIdNumber();
-                if (this_client_id.getNumber() == document_number && this_client_id.getType() == documentType) {
-                    goodToRecord = false;
-                    break;
-                }
-            }
-        }
-
-        if (!goodToRecord){
+        if (clientExist(document)){
             System.out.println("Cliente já cadastrado na nossa base de dados.");
             returnMenu();
         } else {
-            IdDocument idNumber = new IdDocument(document_number, documentType);
-
             System.out.println("Introduza o nome do cliente");
             String name = scan.nextLine();
 
@@ -84,11 +68,47 @@ public class Bank {
             String email = scan.nextLine();
 
             PhoneContact contact = valContact();
-            clients.add(new Client(name, idNumber, birthday, address, email, contact));
+            clients.add(new Client(name, document, birthday, address, email, contact));
         }
     }
 
-    public Date valDate(){
+    private IdDocument askDocument(){
+        try{
+            System.out.println("Introduza o tipo do documento (passaporte ou BI/CC):");
+            String documentType = scan.nextLine().strip().toUpperCase();
+            System.out.println("Introduza o número do documento:");
+            String document_number = scan.nextLine();
+
+            ArrayList<String> validDocumentTypes = new ArrayList<>();
+
+            validDocumentTypes.add("PASSAPORTE");
+            validDocumentTypes.add("BI/CC");
+            validDocumentTypes.add("CC");
+            validDocumentTypes.add("BI");
+
+            if (!validDocumentTypes.contains(documentType)){
+                throw new Exception();
+            }
+
+            return new IdDocument(document_number, documentType);
+        } catch (Exception e){
+            System.out.println("O tipo de documento não é válido, tente novamente.");
+            return askDocument();
+        }
+    }
+
+    private boolean clientExist(IdDocument document) {
+        for (Client thisClient : clients) {
+            IdDocument this_client_id = thisClient.getIdNumber();
+            if (this_client_id.getNumber() == document.getNumber() && this_client_id.getType() == document.getType()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private Date valDate(){
         System.out.println("Introduza a data de nascimento - dd/mm/yyyy");
         String birthday = scan.nextLine();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -100,7 +120,7 @@ public class Bank {
         }
     }
 
-    public PhoneContact valContact(){
+    private PhoneContact valContact(){
         System.out.println("Introduza o numero de telefone");
         String phoneString = scan.nextLine();
         try{
@@ -114,7 +134,7 @@ public class Bank {
         }
     }
 
-    public void changeRecord(){
+    private void changeRecord(){
         System.out.println("Introduza o numero de identificação do cliente");
         String document_number = scan.nextLine();
 
@@ -164,34 +184,29 @@ public class Bank {
         }
     }
 
-    public void accountRecord(){
-        System.out.println("Introduza numero de identificação do cliente");
+    private void accountRecord(){
+        IdDocument document = askDocument();
 
-        boolean goodToGo = false;
-        for (Client thisClient: clients) {
-            if (valClient(scan.nextLine())) {
+        if (!clientExist(document)){
+            System.out.println("Cliente não cadastrado, é necessário primeiro criar o cliente.");
+        } else {
+            Client client = getBankClient(document);
+            System.out.println("Qual o valor do depósito inicial?");
+            double initialDeposit = valAmount(scan.nextLine());
 
-                System.out.println("Qual o valor do depósito inicial?");
-                double initialDeposit = valAmount(scan.nextLine());
+            System.out.println("Deseja associar um cliente dependente na conta? (S/N)");
+            ArrayList<Client> otherClients = new ArrayList();
+            boolean overdraft = false;
 
-                System.out.println("Deseja associar um cliente dependente na conta? (S/N)");
-
-
-                Account newAccount = new Account(accounts.size() + 1, thisClient);
-                thisClient.addAccount(newAccount);
-                goodToGo = true;
-                break;
-            }
-
+            accountsCounter += 1;
+            Account newAccount = new Account(accountsCounter, client, otherClients, initialDeposit, overdraft);
+            client.addAccount(newAccount);
         }
 
-        if (!goodToGo){
-            System.out.println("Cliente não cadastrado, por favor cadastre o cliente antes de abrir a conta.");
-        }
         returnMenu();
     }
 
-    public double valAmount(String amount) {
+    private double valAmount(String amount) {
         try {
 
             double deposit = Double.parseDouble(amount);
@@ -208,48 +223,34 @@ public class Bank {
         }
     }
 
-    public void registerNewOperation(){
-        System.out.println("Introduza o número de identificação do cliente:");
-        String clientId = scan.nextLine();
-        if (!valClient(clientId)){
+    private void registerNewOperation(){
+        IdDocument document = askDocument();
+
+        if (!clientExist(document)){
             System.out.println("Cliente não cadastrado.");
         } else {
-            Client thisClient = getClientFromArray(clientId);
+            Client client = getBankClient(document);
 
             System.out.println("Insira o número da conta:");
             int accountId = valInt(scan.nextLine());
 
-            boolean accountExist = valAccount(accountId);
-            if (!accountExist){
-                System.out.println("A conta inserida não existe.");
+            if (!client.isMyAccount(accountId)){
+                System.out.println("Não foi encontrada conta com esse identificador em suas contas.");
             } else {
-                Account thisAccount = getAccountFromArray(accountId);
-                boolean belongToClient = thisAccount.belongToClient(thisClient);
-                if (!belongToClient){
-                    System.out.println("A conta introduzida não pertence a este cliente.");
-                } else {
-                    System.out.println("Qual é o tipo de operação a ser realizada?");
-                    //Precisamos continuar daqui!!
-                }
+                Account account = client.getAccount(accountId);
+                System.out.println("Qual é o tipo de operação a ser realizada?");
+                //Precisamos continuar daqui!!
             }
 
         }
         returnMenu();
     }
-    
-    public boolean valClient(String id){
-        for (Client thisClient: clients){
-            if (thisClient.getIdNumber().getNumber() == id){
-                return true;
-            }
-        }
-        return false;
-    }
 
-    public Client getClientFromArray(String id){
+    private Client getBankClient(IdDocument document){
         Client thisClient = clients.get(0);
         for (Client client: clients){
-            if (client.getIdNumber().getNumber() == id){
+            IdDocument documentToCompare = client.getIdNumber();
+            if (documentToCompare.getNumber() == document.getNumber() && documentToCompare.getType() == document.getType()){
                 thisClient = client;
                 break;
             }
@@ -257,27 +258,7 @@ public class Bank {
         return thisClient;
     }
 
-    public boolean valAccount(int accountId){
-        for (Account account: accounts){
-            if (account.getAccountNumber() == accountId){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Account getAccountFromArray(int accountId){
-        Account thisAccount = accounts.get(0);
-        for (Account account: accounts){
-            if (account.getAccountNumber() == accountId){
-                thisAccount = account;
-                break;
-            }
-        }
-        return thisAccount;
-    }
-
-    public int valInt(String integer){
+    private int valInt(String integer){
         try{
             return Integer.parseInt(integer);
         } catch (Exception e) {

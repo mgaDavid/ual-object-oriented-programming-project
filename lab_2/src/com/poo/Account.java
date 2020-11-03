@@ -11,18 +11,23 @@ public class Account {
     private double balance;
     private boolean overdraft;
 
-    public Account(int accountNumber, Client mainClient, ArrayList<Client> otherClients, double balance, boolean overdraft) {
+    public Account(
+            int accountNumber,
+            Client mainClient,
+            ArrayList<Client> otherClients,
+            double initialDeposit,
+            boolean overdraft
+    ) {
+
         this.accountNumber = accountNumber;
         this.mainClient = mainClient;
         this.otherClients = otherClients;
-        this.balance = balance;
+        this.balance = initialDeposit;
         this.overdraft = overdraft;
         this.accountOps = new ArrayList<>();
     }
 
-    public int getAccountNumber(){
-        return this.accountNumber;
-    }
+    public int getAccountNumber(){ return this.accountNumber; }
 
     public Client getMainClient(){
         return mainClient;
@@ -72,4 +77,5 @@ public class Account {
         }
         return false;
     }
+
 }
