@@ -1,24 +1,26 @@
 package com.poo;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Client {
 
-    String name;
-    idDocument idNumber;
-    Date birthday;
-    String address;
-    String email;
-    phoneContact contact;
+    private String name;
+    private idDocument idNumber;
+    private Date birthday;
+    private String address;
+    private String email;
+    private PhoneContact contact;
+    private ArrayList<Account> myAccounts;
 
-
-    public Client(String name, idDocument idNumber, Date birthday, String address, String email, phoneContact contact){
+    public Client(String name, idDocument idNumber, Date birthday, String address, String email, PhoneContact contact){
         this.name = name;
         this.idNumber = idNumber;
         this.birthday = birthday;
         this.address = address;
         this.email = email;
         this.contact = contact;
+        this.myAccounts = new ArrayList<>();
     }
 
     public Object getName(){
@@ -39,9 +41,11 @@ public class Client {
         return this.email;
     }
 
-    public phoneContact getContact(){
+    public PhoneContact getContact(){
         return this.contact;
     }
+
+    public ArrayList<Account> getAccounts() { return this.myAccounts; }
 
     public void setName(String name){
         this.name = name;
@@ -59,9 +63,10 @@ public class Client {
         this.email = email;
     }
 
-    public void setContact(phoneContact contact){
+    public void setContact(PhoneContact contact){
         this.contact = contact;
     }
 
+    public void addAccount(Account account){ myAccounts.add(account); }
 
 }

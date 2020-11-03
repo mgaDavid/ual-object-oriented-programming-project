@@ -4,27 +4,20 @@ import java.util.ArrayList;
 
 public class Account {
 
-    //accountNumber provavelmente vai ser um contador e tem de ser unico.
-    int accountNumber;
-    Client mainClient;
-    ArrayList<Client> otherClients;
-    double balance;
-    boolean overdraft;
+    private int accountNumber;
+    private Client mainClient;
+    private ArrayList<Client> otherClients;
+    private ArrayList<Operation> accountOps;
+    private double balance;
+    private boolean overdraft;
 
-    public Account(int accountNumber, Client mainClient, ArrayList<Client> otherClients, double balance, boolean overdraft){
+    public Account(int accountNumber, Client mainClient, ArrayList<Client> otherClients, double balance, boolean overdraft) {
         this.accountNumber = accountNumber;
         this.mainClient = mainClient;
         this.otherClients = otherClients;
         this.balance = balance;
         this.overdraft = overdraft;
-    }
-
-    public Account(int accountNumber, Client mainClient){
-        this.accountNumber = accountNumber;
-        this.mainClient = mainClient;
-        this.otherClients = new ArrayList<>();
-        this.balance = 0;
-        this.overdraft = false;
+        this.accountOps = new ArrayList<>();
     }
 
     public int getAccountNumber(){
@@ -46,6 +39,8 @@ public class Account {
     public Object getOverdraft(){
         return overdraft;
     }
+
+    public ArrayList<Operation> getOps() { return accountOps; }
 
     public void setMainClient(Client mainClient){
         this.mainClient = mainClient;

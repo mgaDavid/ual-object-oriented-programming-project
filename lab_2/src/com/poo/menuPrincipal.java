@@ -10,10 +10,9 @@ import java.math.BigDecimal;
 
 
 public class menuPrincipal {
-    ArrayList<Client> clients = new ArrayList<>();
-    ArrayList<Account> accounts = new ArrayList<>();
-    Scanner scan = new Scanner(System.in);
-    String choice;
+    private ArrayList<Client> clients = new ArrayList<>();
+    private Scanner scan = new Scanner(System.in);
+    private String choice;
 
     public void menu() {
         System.out.println("RC - Registo de cliente");
@@ -84,7 +83,7 @@ public class menuPrincipal {
             System.out.println("Introduza o email");
             String email = scan.nextLine();
 
-            phoneContact contact = valContact();
+            PhoneContact contact = valContact();
             clients.add(new Client(name, idNumber, birthday, address, email, contact));
         }
     }
@@ -101,14 +100,14 @@ public class menuPrincipal {
         }
     }
 
-    public phoneContact valContact(){
+    public PhoneContact valContact(){
         System.out.println("Introduza o numero de telefone");
         String phoneString = scan.nextLine();
         try{
             int phoneNumber = Integer.parseInt(phoneString);
             System.out.println("Introduza o tipo contacto");
             String contactType = scan.nextLine();
-            return new phoneContact(phoneNumber, contactType);
+            return new PhoneContact(phoneNumber, contactType);
         }catch (Exception e){
             System.out.println("O numero está incorreto, por favor apenas numeros");
             return valContact();
@@ -152,7 +151,7 @@ public class menuPrincipal {
                         System.out.println("Introduza o numero de telefone");
                         String novoStrTelefone = scan.nextLine();
                         int novoNumTelefone = Integer.parseInt(novoStrTelefone);
-                        phoneContact novoContacto = new phoneContact(novoNumTelefone, novoTipoContacto);
+                        PhoneContact novoContacto = new PhoneContact(novoNumTelefone, novoTipoContacto);
                         thisClient.setContact(novoContacto);
                     }
                     case "5" -> {
@@ -172,20 +171,18 @@ public class menuPrincipal {
         for (Client thisClient: clients) {
             if (valClient(scan.nextLine())) {
 
+                System.out.println("Qual o valor do depósito inicial?");
+                double initialDeposit = valAmount(scan.nextLine());
+
+                System.out.println("Deseja associar um cliente dependente na conta? (S/N)");
+
+
                 Account newAccount = new Account(accounts.size() + 1, thisClient);
-                accounts.add(newAccount);
-
-                System.out.println("Sua conta foi criada com sucesso. Deseja fazer um depósito inicial? (S/N)");
-                String response = scan.nextLine();
-                if (response.equals("S")){
-                    System.out.println("Introduza o valor a ser depositado: (até 4 casas decimais)");
-                    double amount = valAmount(scan.nextLine());
-                    newAccount.setBalance(amount);
-                }
-
+                thisClient.addAccount(newAccount);
                 goodToGo = true;
                 break;
             }
+
         }
 
         if (!goodToGo){
@@ -288,4 +285,5 @@ public class menuPrincipal {
             return valInt(scan.nextLine());
         }
     }
+
 }

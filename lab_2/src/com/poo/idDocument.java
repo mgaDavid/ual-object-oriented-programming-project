@@ -2,8 +2,8 @@ package com.poo;
 
 public class idDocument {
 
-    String number;
-    String type;
+    private String number;
+    private String type;
 
     public idDocument(String number, String type){
         this.number = number;

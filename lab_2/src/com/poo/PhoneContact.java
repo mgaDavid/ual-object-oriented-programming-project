@@ -1,11 +1,11 @@
 package com.poo;
 
-public class phoneContact {
+public class PhoneContact {
 
-    int phoneNumber;
-    String type;
+    private int phoneNumber;
+    private String type;
 
-    public phoneContact(int phoneNumber, String type){
+    public PhoneContact(int phoneNumber, String type){
         this.phoneNumber = phoneNumber;
         this.type = type;
     }
