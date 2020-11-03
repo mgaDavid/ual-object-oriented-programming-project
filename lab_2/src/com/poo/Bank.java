@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.math.BigDecimal;
 
 
-public class menuPrincipal {
+public class Bank {
     private ArrayList<Client> clients = new ArrayList<>();
     private Scanner scan = new Scanner(System.in);
     private String choice;
@@ -58,7 +58,7 @@ public class menuPrincipal {
 
         if (clients.size() > 0){
             for (Client thisClient : clients) {
-                idDocument this_client_id = thisClient.getIdNumber();
+                IdDocument this_client_id = thisClient.getIdNumber();
                 if (this_client_id.getNumber() == document_number && this_client_id.getType() == documentType) {
                     goodToRecord = false;
                     break;
@@ -70,7 +70,7 @@ public class menuPrincipal {
             System.out.println("Cliente já cadastrado na nossa base de dados.");
             returnMenu();
         } else {
-            idDocument idNumber = new idDocument(document_number, documentType);
+            IdDocument idNumber = new IdDocument(document_number, documentType);
 
             System.out.println("Introduza o nome do cliente");
             String name = scan.nextLine();
@@ -119,7 +119,7 @@ public class menuPrincipal {
         String document_number = scan.nextLine();
 
         for (Client thisClient : clients) {
-            idDocument this_client_id = thisClient.getIdNumber();
+            IdDocument this_client_id = thisClient.getIdNumber();
             if (this_client_id.getNumber() == document_number) {
                 System.out.println("1 - Nome do cliente");
                 System.out.println("2 - Morada");

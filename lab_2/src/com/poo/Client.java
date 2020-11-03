@@ -6,14 +6,14 @@ import java.util.Date;
 public class Client {
 
     private String name;
-    private idDocument idNumber;
+    private IdDocument idNumber;
     private Date birthday;
     private String address;
     private String email;
     private PhoneContact contact;
     private ArrayList<Account> myAccounts;
 
-    public Client(String name, idDocument idNumber, Date birthday, String address, String email, PhoneContact contact){
+    public Client(String name, IdDocument idNumber, Date birthday, String address, String email, PhoneContact contact){
         this.name = name;
         this.idNumber = idNumber;
         this.birthday = birthday;
@@ -27,7 +27,7 @@ public class Client {
         return this.name;
     }
 
-    public idDocument getIdNumber(){
+    public IdDocument getIdNumber(){
         return this.idNumber;
     }
 

@@ -1,11 +1,11 @@
 package com.poo;
 
-public class idDocument {
+public class IdDocument {
 
     private String number;
     private String type;
 
-    public idDocument(String number, String type){
+    public IdDocument(String number, String type){
         this.number = number;
         this.type = type;
     }
