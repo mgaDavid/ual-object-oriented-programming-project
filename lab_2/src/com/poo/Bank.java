@@ -3,28 +3,25 @@ package com.poo;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.math.BigDecimal;
-import static java.lang.Math.abs;
-
+import java.lang.System;
 
 public class Bank {
     private ArrayList<Client> clients = new ArrayList<>();
     private Scanner scan = new Scanner(System.in);
-    private String choice;
+    private String choice = scan.nextLine();
     private int accountsCounter;
     private double tax = 0.42;
-    private Client thisClient;
 
     public void menu() {
         System.out.println("RC - Registo de cliente");
         System.out.println("AC - Alteração de dados de cliente");
         System.out.println("NC - Registo de conta");
-        System.out.println("M - Registo de movimento");
         System.out.println("EC - Editar e consultar dados da conta:");
-        System.out.println("ECC - Edita uma conta");
 
         choice = scan.nextLine().strip().toUpperCase();
 
@@ -32,26 +29,15 @@ public class Bank {
             case "RC" -> clientRecord();
             case "AC" -> changeRecord();
             case "NC" -> accountRecord();
-            case "M" -> newOperation();
-            case "EC" -> editAndConsultAccount();
-            case "ECC" -> editAccount();
+            case "EC" -> manageAccount();
+            case "S"  -> {
+                System.out.println("Encerrando..");
+                System.exit(0);
+            }
             default -> System.out.println("opção inválida, tente novamente.");
         }
 
-        returnMenu();
-    }
-
-    private void returnMenu(){
-        System.out.println("Deseja retornar ao menu principal? (S/N)");
-        choice = scan.nextLine();
-        if (choice.equals("S")){
-            menu();
-        } else if (choice.equals("N")){
-            System.out.println("Encerrando..");
-        } else {
-            System.out.println("Opção inválida, tente novamente.");
-            returnMenu();
-        }
+        menu();
     }
 
     private void clientRecord(){
@@ -59,7 +45,6 @@ public class Bank {
 
         if (clientExist(document)){
             System.out.println("Cliente já cadastrado na nossa base de dados.");
-            returnMenu();
         } else {
             System.out.println("Introduza o nome do cliente");
             String name = scan.nextLine();
@@ -74,8 +59,8 @@ public class Bank {
 
             PhoneContact contact = validateContact();
             clients.add(new Client(name, document, birthday, address, email, contact));
-            returnMenu();
         }
+        menu();
     }
 
     private IdDocument askDocument(){
@@ -186,7 +171,7 @@ public class Bank {
                 }
                 }else {
                 System.out.println("Cliente não existe na base de dados.");
-                returnMenu();
+                menu();
             }
         }
     }
@@ -204,17 +189,13 @@ public class Bank {
             boolean overdraft = askOverdraft();
 
             System.out.println("Caso queria inserir dependentes à conta, deverá fazê-lo no menu principal.");
-            ArrayList<Client> otherClients = new ArrayList<>();
 
             accountsCounter += 1;
-            Account newAccount = new Account(accountsCounter, client, otherClients, initialDeposit, overdraft);
+            Account newAccount = new Account(accountsCounter, client, initialDeposit, overdraft);
             client.addAccount(newAccount);
-            for (Client client1: otherClients){
-                client.addAccount(newAccount);
-            }
         }
 
-        returnMenu();
+        menu();
     }
 
     private double validateAmount(String amount) {
@@ -234,33 +215,16 @@ public class Bank {
         }
     }
 
-    private void newOperation(){
-        IdDocument document = askDocument();
+    private void newOperation(Account account){
+        String type = askOperationType();
 
-        if (!clientExist(document)){
-            System.out.println("Cliente não cadastrado.");
-        } else {
-            Client client = getBankClient(document);
+        System.out.println("Qual o valor da operação?");
+        double value = validateAmount(scan.nextLine());
 
-            System.out.println("Insira o número da conta:");
-            int accountId = validateInt(scan.nextLine());
+        Operation operation = new Operation(type, value, this.tax);
+        validateOperation(operation, account);
 
-            if (!client.isMyAccount(accountId)){
-                System.out.println("Não foi encontrada conta com esse identificador nas contas deste cliente.");
-            } else {
-                Account account = client.getAccount(accountId);
-
-                String type = askOperationType();
-
-                System.out.println("Qual o valor da operação?");
-                double value = validateAmount(scan.nextLine());
-
-                Operation operation = new Operation(type, value, tax);
-                validadeOperation(operation, account);
-            }
-
-        }
-        returnMenu();
+        menu();
     }
 
     private Client getBankClient(IdDocument document){
@@ -288,10 +252,7 @@ public class Bank {
             System.out.println("Qual é o tipo de operação a ser realizada? (DÉBITO ou CRÉDITO)");
             String operationType = scan.nextLine().strip().toUpperCase();
 
-            ArrayList<String> validOperationTypes = new ArrayList<>();
-
-            validOperationTypes.add("DÉBITO");
-            validOperationTypes.add("CRÉDITO");
+            ArrayList<String> validOperationTypes = new ArrayList<>(Arrays.asList("DÉBITO", "CRÉDITO"));
 
             if (!validOperationTypes.contains(operationType)){
                 throw new Exception();
@@ -305,7 +266,7 @@ public class Bank {
 
     }
 
-    private void validadeOperation(Operation operation, Account account){
+    private void validateOperation(Operation operation, Account account){
         if (account.getOverdraft() || operation.getType().equals("CRÉDITO") || account.getBalance() >= -operation.getAmount()){
             account.registerOperation(operation, this.tax);
             System.out.println("Operação efetuada com sucesso!");
@@ -326,45 +287,43 @@ public class Bank {
 
             if (choice.equals("E")){
                 if (!account.getOtherClients().contains(dependent)){
-                    
+                    System.out.println("O cliente inserido não é um dependente dessa conta.");
+                } else {
+                    account.removeDependent(dependent);
                 }
 
             } else if (choice.equals("A")){
-                account.addDependent(dependent);
+                if (!account.getOtherClients().contains(dependent)){
+                    account.addDependent(dependent);
+                } else {
+                    System.out.println("O cliente inserido já é um dependente dessa conta.");
+                }
             } else {
                 System.out.println("Opção inválida, tente novamente.");
-                editAccount(account);
             }
         }
+        editAccount(account);
     }
 
     private boolean askOverdraft(){
         System.out.println("Deseja habilitar a conta à operações à descoberto? (S/N)");
-        choice = scan.nextLine().strip().toUpperCase();
 
-        if (choice.equals("S")){
-            return true;
-        } else if (!choice.equals("N")){
-            System.out.println("Resposta inválida, tente novamente.");
-            return askOverdraft();
-        }
-        return false;
-    }
 
-    private void editAccount(Account account){
-        System.out.println("Deseja modificar o overdraft ou os dependentes da conta? (O/D)");
-        choice = scan.nextLine().strip().toUpperCase();
-        if (choice.equals("O")){
-            account.setOverdraft(askOverdraft());
-        } else if (choice.equals("D")){
-            setNewDependents(account);
-        } else {
-            System.out.println("Opção inválida, tente novamente.");
-            editAccount(account);
+        switch (scan.nextLine().strip().toUpperCase()){
+            case "S" -> {
+                return true;
+            }
+            case "N" -> {
+                return false;
+            }
+            default -> {
+                System.out.println("Resposta inválida, tente novamente.");
+                return askOverdraft();
+            }
         }
     }
 
-    public void editAndConsultAccount(){
+    public void manageAccount(){
         IdDocument document = askDocument();
         if (!clientExist(document)){
             System.out.println("Cliente não cadastrado, é necessário primeiro criar o cliente.");
@@ -378,14 +337,39 @@ public class Bank {
                 System.out.println("Não foi encontrada conta com esse identificador nas contas deste cliente.");
             } else {
                 Account account = client.getAccount(accountId);
-                System.out.println("Deseja consultar o saldo ou modificar os dados da conta? (S/M)");
-                choice = scan.nextLine().strip().toUpperCase();
-                if (choice.equals("M")){
-                    editAccount(account);
-                } else if (choice.equals("S")){
-                    System.out.println("O saldo da conta é: " + account.getBalance());
-                }
+                askAccountOption(account);
             }
+        }
+    }
+
+    public void askAccountOption(Account account){
+        System.out.println("Para consultar o saldo da conta digite SC");
+        System.out.println("Para realizar um novo movimento digite M");
+        System.out.println("Para editar os dados da conta digite E");
+        System.out.println("Para retornar ao menu principal digite V");
+
+        switch (scan.nextLine().strip().toUpperCase()) {
+            case "SC" -> System.out.println("O saldo da conta é: " + account.getBalance());
+            case "M" -> newOperation(account);
+            case "E" -> editAccount(account);
+            case "V" -> menu();
+            default -> {
+                System.out.println("Opção inválida, tente novamente.");
+                askAccountOption(account);
+            }
+        }
+    }
+
+    private void editAccount(Account account){
+        System.out.println("Deseja modificar o overdraft ou os dependentes da conta? (O/D - S para sair)");
+        choice = scan.nextLine().strip().toUpperCase();
+        if (choice.equals("O")){
+            account.setOverdraft(askOverdraft());
+        } else if (choice.equals("D")){
+            setNewDependents(account);
+        } else if (!choice.equals("S")){
+            System.out.println("Opção inválida, tente novamente.");
+            editAccount(account);
         }
     }
 }
