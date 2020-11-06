@@ -6,16 +6,16 @@ import java.util.Date;
 public class Client {
 
     private String name;
-    private IdDocument idNumber;
+    private IdDocument document;
     private Date birthday;
     private String address;
     private String email;
     private PhoneContact contact;
     private ArrayList<Account> myAccounts;
 
-    public Client(String name, IdDocument idNumber, Date birthday, String address, String email, PhoneContact contact){
+    public Client(String name, IdDocument document, Date birthday, String address, String email, PhoneContact contact){
         this.name = name;
-        this.idNumber = idNumber;
+        this.document = document;
         this.birthday = birthday;
         this.address = address;
         this.email = email;
@@ -27,8 +27,8 @@ public class Client {
         return this.name;
     }
 
-    public IdDocument getIdNumber(){
-        return this.idNumber;
+    public IdDocument getDocument(){
+        return this.document;
     }
 
     public Object getBirthday(){ return this.birthday; }
@@ -87,5 +87,9 @@ public class Client {
             }
         }
         return false;
+    }
+
+    public boolean equals(IdDocument document){
+        return document.equals(this.getDocument());
     }
 }

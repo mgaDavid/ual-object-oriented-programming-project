@@ -64,13 +64,13 @@ public class Account {
     }
 
     public boolean belongToClient(Client client){
-        if (client.getIdNumber().getNumber() == mainClient.getIdNumber().getNumber()){
+        if (client.getDocument().equals(mainClient.getDocument())){
             return true;
         }
 
         if (otherClients.size() > 0){
             for (Client dependent: otherClients){
-                if (dependent.getIdNumber().getNumber() == client.getIdNumber().getNumber()){
+                if (dependent.getDocument().equals(dependent.getDocument())){
                     return true;
                 }
             }

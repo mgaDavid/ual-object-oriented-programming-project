@@ -18,7 +18,7 @@ public class IdDocument {
         return this.type;
     }
 
-    public void setType(String type){
-        this.type = type;
+    public boolean equals(IdDocument document) {
+        return (this.number.equals(document.getNumber()) && this.type.equals(document.getType()));
     }
 }

@@ -28,7 +28,7 @@ public class Bank {
             case "rc" -> clientRecord();
             case "ac" -> changeRecord();
             case "nc" -> accountRecord();
-            case "m" -> registerNewOperation();
+            case "m" -> registerOperation();
             case "sc" -> System.out.println("5");
             default -> System.out.println("opção inválida, tente novamente.");
         }
@@ -42,7 +42,7 @@ public class Bank {
         if (choice.equals("S")){
             menu();
         } else if (choice.equals("N")){
-            System.out.println("Foi um prazer recebê-lo!");
+            System.out.println("Encerrando..");
         } else {
             System.out.println("Opção inválida, tente novamente.");
             returnMenu();
@@ -59,7 +59,7 @@ public class Bank {
             System.out.println("Introduza o nome do cliente");
             String name = scan.nextLine();
 
-            Date birthday = valDate();
+            Date birthday = validateDate();
 
             System.out.println("Introduza a morada");
             String address = scan.nextLine();
@@ -67,8 +67,9 @@ public class Bank {
             System.out.println("Introduza o email");
             String email = scan.nextLine();
 
-            PhoneContact contact = valContact();
+            PhoneContact contact = validateContact();
             clients.add(new Client(name, document, birthday, address, email, contact));
+            returnMenu();
         }
     }
 
@@ -83,11 +84,13 @@ public class Bank {
 
             validDocumentTypes.add("PASSAPORTE");
             validDocumentTypes.add("BI/CC");
-            validDocumentTypes.add("CC");
             validDocumentTypes.add("BI");
+            validDocumentTypes.add("CC");
 
             if (!validDocumentTypes.contains(documentType)){
                 throw new Exception();
+            } else if (documentType.equals("CC") || documentType.equals("BI")){
+                documentType = "BI/CC";
             }
 
             return new IdDocument(document_number, documentType);
@@ -99,8 +102,7 @@ public class Bank {
 
     private boolean clientExist(IdDocument document) {
         for (Client thisClient : clients) {
-            IdDocument this_client_id = thisClient.getIdNumber();
-            if (this_client_id.getNumber() == document.getNumber() && this_client_id.getType() == document.getType()) {
+            if (thisClient.equals(document)) {
                 return true;
             }
         }
@@ -108,19 +110,19 @@ public class Bank {
         return false;
     }
 
-    private Date valDate(){
-        System.out.println("Introduza a data de nascimento - dd/mm/yyyy");
+    private Date validateDate(){
+        System.out.println("Introduza a data de nascimento - yyyy/mm/dd");
         String birthday = scan.nextLine();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         try{
             return format.parse(birthday);
         } catch (ParseException e){
             System.out.println("O formato de data inserido está incorreto, por favor tente novamente");
-            return valDate();
+            return validateDate();
         }
     }
 
-    private PhoneContact valContact(){
+    private PhoneContact validateContact(){
         System.out.println("Introduza o numero de telefone");
         String phoneString = scan.nextLine();
         try{
@@ -130,7 +132,7 @@ public class Bank {
             return new PhoneContact(phoneNumber, contactType);
         }catch (Exception e){
             System.out.println("O numero está incorreto, por favor apenas numeros");
-            return valContact();
+            return validateContact();
         }
     }
 
@@ -139,7 +141,7 @@ public class Bank {
         String document_number = scan.nextLine();
 
         for (Client thisClient : clients) {
-            IdDocument this_client_id = thisClient.getIdNumber();
+            IdDocument this_client_id = thisClient.getDocument();
             if (this_client_id.getNumber() == document_number) {
                 System.out.println("1 - Nome do cliente");
                 System.out.println("2 - Morada");
@@ -192,10 +194,10 @@ public class Bank {
         } else {
             Client client = getBankClient(document);
             System.out.println("Qual o valor do depósito inicial?");
-            double initialDeposit = valAmount(scan.nextLine());
+            double initialDeposit = validateAmount(scan.nextLine());
 
             System.out.println("Deseja associar um cliente dependente na conta? (S/N)");
-            ArrayList<Client> otherClients = new ArrayList();
+            ArrayList<Client> otherClients = new ArrayList<>();
             boolean overdraft = false;
 
             accountsCounter += 1;
@@ -206,7 +208,7 @@ public class Bank {
         returnMenu();
     }
 
-    private double valAmount(String amount) {
+    private double validateAmount(String amount) {
         try {
 
             double deposit = Double.parseDouble(amount);
@@ -219,11 +221,11 @@ public class Bank {
             return deposit;
         } catch (Exception e){
             System.out.println("Valor inválido, insira outro valor (o valor inserido deve conter até 4 casas decimais):");
-            return valAmount(scan.nextLine());
+            return validateAmount(scan.nextLine());
         }
     }
 
-    private void registerNewOperation(){
+    private void registerOperation(){
         IdDocument document = askDocument();
 
         if (!clientExist(document)){
@@ -232,10 +234,10 @@ public class Bank {
             Client client = getBankClient(document);
 
             System.out.println("Insira o número da conta:");
-            int accountId = valInt(scan.nextLine());
+            int accountId = validateInt(scan.nextLine());
 
             if (!client.isMyAccount(accountId)){
-                System.out.println("Não foi encontrada conta com esse identificador em suas contas.");
+                System.out.println("Não foi encontrada conta com esse identificador nas contas deste cliente.");
             } else {
                 Account account = client.getAccount(accountId);
                 System.out.println("Qual é o tipo de operação a ser realizada?");
@@ -249,8 +251,7 @@ public class Bank {
     private Client getBankClient(IdDocument document){
         Client thisClient = clients.get(0);
         for (Client client: clients){
-            IdDocument documentToCompare = client.getIdNumber();
-            if (documentToCompare.getNumber() == document.getNumber() && documentToCompare.getType() == document.getType()){
+            if (client.equals(document)){
                 thisClient = client;
                 break;
             }
@@ -258,12 +259,12 @@ public class Bank {
         return thisClient;
     }
 
-    private int valInt(String integer){
+    private int validateInt(String integer){
         try{
             return Integer.parseInt(integer);
         } catch (Exception e) {
             System.out.println("O número inserido não é um número inteiro, tente novamente:");
-            return valInt(scan.nextLine());
+            return validateInt(scan.nextLine());
         }
     }
 
