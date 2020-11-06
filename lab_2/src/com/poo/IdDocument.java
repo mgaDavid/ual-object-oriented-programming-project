@@ -21,4 +21,5 @@ public class IdDocument {
     public boolean equals(IdDocument document) {
         return (this.number.equals(document.getNumber()) && this.type.equals(document.getType()));
     }
+
 }

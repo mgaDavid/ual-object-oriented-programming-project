@@ -2,25 +2,12 @@ package com.poo;
 
 public class PhoneContact {
 
-    private int phoneNumber;
+    private int number;
     private String type;
 
-    public PhoneContact(int phoneNumber, String type){
-        this.phoneNumber = phoneNumber;
+    public PhoneContact(int number, String type){
+        this.number = number;
         this.type = type;
     }
 
-    public int getPhoneNumber(){
-        return this.phoneNumber;
-    }
-
-    public String getType(){
-        return this.type;
-    }
-
-    public void setPhoneNumber(int phoneNumber){ this.phoneNumber = phoneNumber; }
-
-    public void setType(String type){
-        this.type = type;
-    }
 }

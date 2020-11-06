@@ -8,17 +8,14 @@ public class Operation {
 
     private final double amount;
     private final LocalDateTime date;
-    private final String operationType;
-    private double tax;
+    private final String type;
+    private final double tax;
 
     public Operation(String type, double amount, double tax){
-        if (type.equals("DÉBITO")){
-            this.amount = -abs(amount);
-        } else{
-            this.amount = abs(amount);
-        }
+        if (type.equals("DÉBITO")) this.amount = -abs(amount);
+        else this.amount = abs(amount);
         this.date = LocalDateTime.now();
-        this.operationType = type;
+        this.type = type;
         this.tax = tax;
     }
 
@@ -31,7 +28,15 @@ public class Operation {
     }
 
     public String getType(){
-        return this.operationType;
+        return this.type;
+    }
+
+    public double getTax() {
+        return this.tax;
+    }
+
+    public String toString(){
+        return "Data: " + this.getDate().toString() + " Tipo: " + this.getType() + " Taxa: " + this.getTax() + " Valor: " + this.getAmount();
     }
 
 }

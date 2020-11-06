@@ -20,18 +20,19 @@ public class Bank {
         System.out.println("RC - Registo de cliente");
         System.out.println("AC - Alteração de dados de cliente");
         System.out.println("NC - Registo de conta");
-        System.out.println("EC - Editar e consultar dados da conta:");
+        System.out.println("EC - Editar e consultar dados de conta");
+        System.out.println("S  - Sair");
 
         switch (getTreatedInput()) {
             case "RC" -> clientRecord();
             case "AC" -> changeClientRecord();
             case "NC" -> accountRecord();
             case "EC" -> manageAccount();
-            case "S"  -> {
+            case "S" -> {
                 System.out.println("Encerrando..");
                 System.exit(0);
             }
-            default -> System.out.println("opção inválida, tente novamente.");
+            default -> System.out.println("Opção inválida, tente novamente. (MENSAGEM DO menu)");
         }
 
         menu();
@@ -61,30 +62,18 @@ public class Bank {
     }
 
     private IdDocument askDocument(){
-        try{
-            System.out.println("Introduza o tipo do documento (passaporte ou BI/CC):");
-            String documentType = getTreatedInput();
-            System.out.println("Introduza o número do documento:");
-            String document_number = getTreatedInput();
+        System.out.println("Introduza o tipo do documento (PASSAPORTE ou BI/CC):");
+        String documentType = getTreatedInput();
 
-            ArrayList<String> validDocumentTypes = new ArrayList<>();
-
-            validDocumentTypes.add("PASSAPORTE");
-            validDocumentTypes.add("BI/CC");
-            validDocumentTypes.add("BI");
-            validDocumentTypes.add("CC");
-
-            if (!validDocumentTypes.contains(documentType)){
-                throw new Exception();
-            } else if (documentType.equals("CC") || documentType.equals("BI")){
-                documentType = "BI/CC";
-            }
-
-            return new IdDocument(document_number, documentType);
-        } catch (Exception e){
+        if (!Arrays.asList("PASSAPORTE", "BI/CC", "BI", "CC").contains(documentType)){
             System.out.println("O tipo de documento não é válido, tente novamente.");
             return askDocument();
+        } else if (Arrays.asList("BI", "CC").contains(documentType)){
+            documentType = "BI/CC";
         }
+
+        System.out.println("Introduza o número do documento:");
+        return new IdDocument(getTreatedInput(), documentType);
     }
 
     private boolean clientExist(IdDocument document) {
@@ -171,7 +160,7 @@ public class Bank {
 
             boolean overdraft = askOverdraft();
 
-            System.out.println("Caso queria inserir dependentes à conta, deverá fazê-lo no menu principal.");
+            System.out.println("Caso queira inserir dependentes à conta, deverá fazê-lo através do menu de edição de contas.");
 
             accountsCounter += 1;
             Account newAccount = new Account(accountsCounter, client, initialDeposit, overdraft);
@@ -251,7 +240,7 @@ public class Bank {
 
     private void validateOperation(Operation operation, Account account){
         if (account.getOverdraft() || operation.getType().equals("CRÉDITO") || account.getBalance() >= -operation.getAmount()){
-            account.registerOperation(operation, this.tax);
+            account.registerOperation(operation);
             System.out.println("Operação efetuada com sucesso!");
         } else {
             System.out.println("Saldo insuficiente!");
@@ -269,14 +258,14 @@ public class Bank {
 
             switch (getTreatedInput()) {
                 case "E" -> {
-                    if (!account.getOtherClients().contains(dependent)) {
+                    if (!account.getDependents().contains(dependent)) {
                         System.out.println("O cliente inserido não é um dependente dessa conta.");
                     } else {
                         account.removeDependent(dependent);
                     }
                 }
                 case "A" -> {
-                    if (!account.getOtherClients().contains(dependent)) {
+                    if (!account.getDependents().contains(dependent)) {
                         account.addDependent(dependent);
                     } else {
                         System.out.println("O cliente inserido já é um dependente dessa conta.");
@@ -323,40 +312,52 @@ public class Bank {
                 System.out.println("Não foi encontrada conta com esse identificador nas contas deste cliente.");
             } else {
                 Account account = client.getAccount(accountId);
-                askAccountOption(account);
+                accountMenu(account);
             }
         }
     }
 
-    public void askAccountOption(Account account){
-        System.out.println("Para consultar o saldo da conta digite SC");
-        System.out.println("Para realizar um novo movimento digite M");
-        System.out.println("Para editar os dados da conta digite E");
-        System.out.println("Para retornar ao menu principal digite V");
+    public void accountMenu(Account account){
+        System.out.println("Digite:");
+        System.out.println("SC - Para consulta de saldo");
+        System.out.println("M  - Para adicionar um movimento");
+        System.out.println("LM - Para listar todos os movimentos");
+        System.out.println("E  - Para editar os dados da conta");
+        System.out.println("P  - Para retornar ao menu principal");
 
         switch (getTreatedInput()) {
             case "SC" -> System.out.println("O saldo da conta é: " + account.getBalance());
             case "M" -> newOperation(account);
+            case "LM" -> listOperations(account);
             case "E" -> editAccount(account);
-            case "V" -> menu();
+            case "P" -> menu();
             default -> {
-                System.out.println("Opção inválida, tente novamente.");
-                askAccountOption(account);
+                System.out.println("Opção inválida, tente novamente. (MENSAGEM DO accountMenu)");
+                accountMenu(account);
             }
         }
     }
 
+    private void listOperations(Account account) {
+        for (Operation operation: account.getOperations()){
+            System.out.println(operation);
+        }
+    }
+
     private void editAccount(Account account){
-        System.out.println("Para modificar o overdraft digite O");
-        System.out.println("Para editar os dependentes da conta digite D");
-        System.out.println("Para retornar ao menu principal digite V");
+        System.out.println("Digite:");
+        System.out.println("O - Para modificar o overdraft");
+        System.out.println("D - Para editar os dependentes da conta");
+        System.out.println("V - Para retornar ao menu da conta");
+        System.out.println("P - Para retornar ao menu principal");
 
         switch (getTreatedInput()) {
             case "O" -> account.setOverdraft(askOverdraft());
             case "D" -> setNewDependents(account);
-            case "V" -> menu();
+            case "V" -> accountMenu(account);
+            case "P" -> menu();
             default -> {
-                System.out.println("Opção inválida, tente novamente.");
+                System.out.println("Opção inválida, tente novamente. (MENSAGEM DO editAccount)");
                 editAccount(account);
             }
         }

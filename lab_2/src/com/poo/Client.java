@@ -23,36 +23,14 @@ public class Client {
         this.myAccounts = new ArrayList<>();
     }
 
-    public Object getName(){
-        return this.name;
-    }
-
     public IdDocument getDocument(){
         return this.document;
-    }
-
-    public Object getBirthday(){ return this.birthday; }
-
-    public Object getAddress(){
-        return this.address;
-    }
-
-    public Object getEmail(){
-        return this.email;
-    }
-
-    public PhoneContact getContact(){
-        return this.contact;
     }
 
     public ArrayList<Account> getAccounts() { return this.myAccounts; }
 
     public void setName(String name){
         this.name = name;
-    }
-
-    public void setBirthday(Date birthday){
-        this.birthday = birthday;
     }
 
     public void setAddress(String address){
@@ -67,12 +45,12 @@ public class Client {
         this.contact = contact;
     }
 
-    public void addAccount(Account account){ myAccounts.add(account); }
+    public void addAccount(Account account){ this.myAccounts.add(account); }
 
     public Account getAccount(int accountId){
-        Account thisAccount = myAccounts.get(0);
-        for (Account account: myAccounts){
-            if (account.getAccountNumber() == accountId){
+        Account thisAccount = this.getAccounts().get(0);
+        for (Account account: this.getAccounts()){
+            if (account.getNumber() == accountId){
                 thisAccount = account;
                 break;
             }
@@ -81,15 +59,14 @@ public class Client {
     }
 
     public boolean isMyAccount(int accountId){
-        for (Account account: myAccounts){
-            if (account.getAccountNumber() == accountId){
+        for (Account account: this.getAccounts()){
+            if (account.getNumber() == accountId){
                 return true;
             }
         }
         return false;
     }
 
-    public boolean equals(IdDocument document){
-        return document.equals(this.getDocument());
-    }
+    public boolean equals(IdDocument document){ return document.equals(this.getDocument()); }
+
 }

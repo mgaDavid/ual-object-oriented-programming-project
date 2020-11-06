@@ -4,30 +4,26 @@ import java.util.ArrayList;
 
 public class Account {
 
-    private int accountNumber;
-    private Client mainClient;
-    private ArrayList<Client> otherClients;
-    private ArrayList<Operation> accountOps;
-    private double balance;
+    private final int number;
+    private Client client;
+    private ArrayList<Client> dependents;
+    private ArrayList<Operation> operations;
+    private double balance = 0;
     private boolean overdraft;
 
-    public Account(int accountNumber, Client mainClient, double initialDeposit, boolean overdraft) {
-        this.accountNumber = accountNumber;
-        this.mainClient = mainClient;
-        this.otherClients = new ArrayList<>();
-        this.balance = initialDeposit;
+    public Account(int number, Client client, double initialDeposit, boolean overdraft) {
+        this.number = number;
+        this.client = client;
+        this.dependents = new ArrayList<>();
+        this.operations = new ArrayList<>();
         this.overdraft = overdraft;
-        this.accountOps = new ArrayList<>();
+        this.registerOperation(new Operation("CRÉDITO", initialDeposit, 0));
     }
 
-    public int getAccountNumber(){ return this.accountNumber; }
+    public int getNumber(){ return this.number; }
 
-    public Client getMainClient(){
-        return mainClient;
-    }
-
-    public ArrayList<Client> getOtherClients(){
-        return otherClients;
+    public ArrayList<Client> getDependents(){
+        return dependents;
     }
 
     public double getBalance(){
@@ -38,33 +34,25 @@ public class Account {
         return overdraft;
     }
 
-    public ArrayList<Operation> getOps() { return accountOps; }
+    public ArrayList<Operation> getOperations() { return operations; }
 
-    public void setMainClient(Client mainClient){
-        this.mainClient = mainClient;
-    }
-
-    public void setOtherClients(ArrayList<Client> otherClients){
-        this.otherClients = otherClients;
-    }
-
-    public void setBalance(double balance){ this.balance += balance; }
+    private void setBalance(double balance){ this.balance = balance; }
 
     public void setOverdraft(boolean overdraft){
         this.overdraft = overdraft;
     }
 
-    public void registerOperation(Operation operation, double tax){
-        this.accountOps.add(operation);
-        setBalance(operation.getAmount() - tax);
+    public void registerOperation(Operation operation){
+        this.operations.add(operation);
+        setBalance(this.getBalance() + (operation.getAmount() - operation.getTax()));
     }
 
     public void addDependent(Client client){
-        this.otherClients.add(client);
+        this.dependents.add(client);
     }
 
     public void removeDependent(Client client){
-        this.otherClients.remove(client);
+        this.dependents.remove(client);
     }
 
 }
