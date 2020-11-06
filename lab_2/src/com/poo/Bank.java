@@ -13,7 +13,6 @@ import java.lang.System;
 public class Bank {
     private ArrayList<Client> clients = new ArrayList<>();
     private Scanner scan = new Scanner(System.in);
-    private String choice = scan.nextLine();
     private int accountsCounter;
     private double tax = 0.42;
 
@@ -23,11 +22,9 @@ public class Bank {
         System.out.println("NC - Registo de conta");
         System.out.println("EC - Editar e consultar dados da conta:");
 
-        choice = scan.nextLine().strip().toUpperCase();
-
-        switch (choice) {
+        switch (getTreatedInput()) {
             case "RC" -> clientRecord();
-            case "AC" -> changeRecord();
+            case "AC" -> changeClientRecord();
             case "NC" -> accountRecord();
             case "EC" -> manageAccount();
             case "S"  -> {
@@ -47,15 +44,15 @@ public class Bank {
             System.out.println("Cliente já cadastrado na nossa base de dados.");
         } else {
             System.out.println("Introduza o nome do cliente");
-            String name = scan.nextLine();
+            String name = getTreatedInput();
 
             Date birthday = validateDate();
 
             System.out.println("Introduza a morada");
-            String address = scan.nextLine();
+            String address = getTreatedInput();
 
             System.out.println("Introduza o email");
-            String email = scan.nextLine();
+            String email = getTreatedInput();
 
             PhoneContact contact = validateContact();
             clients.add(new Client(name, document, birthday, address, email, contact));
@@ -66,9 +63,9 @@ public class Bank {
     private IdDocument askDocument(){
         try{
             System.out.println("Introduza o tipo do documento (passaporte ou BI/CC):");
-            String documentType = scan.nextLine().strip().toUpperCase();
+            String documentType = getTreatedInput();
             System.out.println("Introduza o número do documento:");
-            String document_number = scan.nextLine();
+            String document_number = getTreatedInput();
 
             ArrayList<String> validDocumentTypes = new ArrayList<>();
 
@@ -102,7 +99,7 @@ public class Bank {
 
     private Date validateDate(){
         System.out.println("Introduza a data de nascimento - yyyy/mm/dd");
-        String birthday = scan.nextLine();
+        String birthday = getTreatedInput();
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         try{
             return format.parse(birthday);
@@ -114,65 +111,51 @@ public class Bank {
 
     private PhoneContact validateContact(){
         System.out.println("Introduza o numero de telefone");
-        String phoneString = scan.nextLine();
+        String phoneString = getTreatedInput();
         try{
             int phoneNumber = Integer.parseInt(phoneString);
             System.out.println("Introduza o tipo contacto");
-            String contactType = scan.nextLine();
+            String contactType = getTreatedInput();
             return new PhoneContact(phoneNumber, contactType);
         }catch (Exception e){
-            System.out.println("O numero está incorreto, por favor apenas numeros");
+            System.out.println("O numero está incorreto, por favor introduza apenas números");
             return validateContact();
         }
     }
 
-    private void changeRecord(){
-        System.out.println("Introduza o numero de identificação do cliente");
-        String document_number = scan.nextLine();
+    private void editClient(Client client){
+        System.out.println("1 - Nome do cliente");
+        System.out.println("2 - Morada");
+        System.out.println("3 - email");
+        System.out.println("4 - Contacto");
+        System.out.println("5 - Sair para menu principal");
 
-        for (Client thisClient : clients) {
-            IdDocument this_client_id = thisClient.getDocument();
-            if (this_client_id.getNumber() == document_number) {
-                System.out.println("1 - Nome do cliente");
-                System.out.println("2 - Morada");
-                System.out.println("3 - email");
-                System.out.println("4 - Contacto");
-                System.out.println("5 - Sair para menu principal");
-
-                choice = scan.nextLine();
-
-                switch (choice) {
-                    case "1" -> {
-                        System.out.println("Introduza o novo nome");
-                        String novoNome = scan.nextLine();
-                        thisClient.setName(novoNome);
-                    }
-                    case "2" -> {
-                        System.out.println("Introduza a nova morada");
-                        String novaMorada = scan.nextLine();
-                        thisClient.setAddress(novaMorada);
-                    }
-                    case "3" -> {
-                        System.out.println("Introduza o novo email");
-                        String novoEmail = scan.nextLine();
-                        thisClient.setEmail(novoEmail);
-                    }
-                    case "4" -> {
-                        System.out.println("Introduza o tipo de contacto");
-                        String novoTipoContacto = scan.nextLine();
-                        System.out.println("Introduza o numero de telefone");
-                        String novoStrTelefone = scan.nextLine();
-                        int novoNumTelefone = Integer.parseInt(novoStrTelefone);
-                        PhoneContact novoContacto = new PhoneContact(novoNumTelefone, novoTipoContacto);
-                        thisClient.setContact(novoContacto);
-                    }
-                    case "5" -> {
-                    }
-                }
-                }else {
-                System.out.println("Cliente não existe na base de dados.");
-                menu();
+        switch (getTreatedInput()) {
+            case "1" -> {
+                System.out.println("Introduza o novo nome");
+                client.setName(getTreatedInput());
             }
+            case "2" -> {
+                System.out.println("Introduza a nova morada");
+                client.setAddress(getTreatedInput());
+            }
+            case "3" -> {
+                System.out.println("Introduza o novo email");
+                client.setEmail(getTreatedInput());
+            }
+            case "4" -> client.setContact(validateContact());
+            case "5" -> menu();
+        }
+    }
+
+    private void changeClientRecord(){
+        IdDocument document = askDocument();
+
+        if (clientExist(document)){
+            editClient(getBankClient(document));
+        } else {
+            System.out.println("Cliente não existe na base de dados.");
+            menu();
         }
     }
 
@@ -184,7 +167,7 @@ public class Bank {
         } else {
             Client client = getBankClient(document);
             System.out.println("Qual o valor do depósito inicial?");
-            double initialDeposit = validateAmount(scan.nextLine());
+            double initialDeposit = validateAmount(getTreatedInput());
 
             boolean overdraft = askOverdraft();
 
@@ -211,7 +194,7 @@ public class Bank {
             return deposit;
         } catch (Exception e){
             System.out.println("Valor inválido, insira outro valor (o valor inserido deve conter até 4 casas decimais):");
-            return validateAmount(scan.nextLine());
+            return validateAmount(getTreatedInput());
         }
     }
 
@@ -219,7 +202,7 @@ public class Bank {
         String type = askOperationType();
 
         System.out.println("Qual o valor da operação?");
-        double value = validateAmount(scan.nextLine());
+        double value = validateAmount(getTreatedInput());
 
         Operation operation = new Operation(type, value, this.tax);
         validateOperation(operation, account);
@@ -243,14 +226,14 @@ public class Bank {
             return Integer.parseInt(integer);
         } catch (Exception e) {
             System.out.println("O número inserido não é um número inteiro, tente novamente:");
-            return validateInt(scan.nextLine());
+            return validateInt(getTreatedInput());
         }
     }
 
     private String askOperationType(){
         try{
             System.out.println("Qual é o tipo de operação a ser realizada? (DÉBITO ou CRÉDITO)");
-            String operationType = scan.nextLine().strip().toUpperCase();
+            String operationType = getTreatedInput();
 
             ArrayList<String> validOperationTypes = new ArrayList<>(Arrays.asList("DÉBITO", "CRÉDITO"));
 
@@ -283,23 +266,23 @@ public class Bank {
             Client dependent = getBankClient(document);
 
             System.out.println("Deseja excluir ou adicionar o dependente? (E/A)");
-            choice = scan.nextLine().strip().toUpperCase();
 
-            if (choice.equals("E")){
-                if (!account.getOtherClients().contains(dependent)){
-                    System.out.println("O cliente inserido não é um dependente dessa conta.");
-                } else {
-                    account.removeDependent(dependent);
+            switch (getTreatedInput()) {
+                case "E" -> {
+                    if (!account.getOtherClients().contains(dependent)) {
+                        System.out.println("O cliente inserido não é um dependente dessa conta.");
+                    } else {
+                        account.removeDependent(dependent);
+                    }
                 }
-
-            } else if (choice.equals("A")){
-                if (!account.getOtherClients().contains(dependent)){
-                    account.addDependent(dependent);
-                } else {
-                    System.out.println("O cliente inserido já é um dependente dessa conta.");
+                case "A" -> {
+                    if (!account.getOtherClients().contains(dependent)) {
+                        account.addDependent(dependent);
+                    } else {
+                        System.out.println("O cliente inserido já é um dependente dessa conta.");
+                    }
                 }
-            } else {
-                System.out.println("Opção inválida, tente novamente.");
+                default -> System.out.println("Opção inválida, tente novamente.");
             }
         }
         editAccount(account);
@@ -308,8 +291,7 @@ public class Bank {
     private boolean askOverdraft(){
         System.out.println("Deseja habilitar a conta à operações à descoberto? (S/N)");
 
-
-        switch (scan.nextLine().strip().toUpperCase()){
+        switch (getTreatedInput()){
             case "S" -> {
                 return true;
             }
@@ -323,6 +305,10 @@ public class Bank {
         }
     }
 
+    private String getTreatedInput() {
+        return scan.nextLine().strip().toUpperCase();
+    }
+
     public void manageAccount(){
         IdDocument document = askDocument();
         if (!clientExist(document)){
@@ -331,7 +317,7 @@ public class Bank {
             Client client = getBankClient(document);
 
             System.out.println("Insira o número da conta:");
-            int accountId = validateInt(scan.nextLine());
+            int accountId = validateInt(getTreatedInput());
 
             if (!client.isMyAccount(accountId)){
                 System.out.println("Não foi encontrada conta com esse identificador nas contas deste cliente.");
@@ -348,7 +334,7 @@ public class Bank {
         System.out.println("Para editar os dados da conta digite E");
         System.out.println("Para retornar ao menu principal digite V");
 
-        switch (scan.nextLine().strip().toUpperCase()) {
+        switch (getTreatedInput()) {
             case "SC" -> System.out.println("O saldo da conta é: " + account.getBalance());
             case "M" -> newOperation(account);
             case "E" -> editAccount(account);
@@ -361,15 +347,19 @@ public class Bank {
     }
 
     private void editAccount(Account account){
-        System.out.println("Deseja modificar o overdraft ou os dependentes da conta? (O/D - S para sair)");
-        choice = scan.nextLine().strip().toUpperCase();
-        if (choice.equals("O")){
-            account.setOverdraft(askOverdraft());
-        } else if (choice.equals("D")){
-            setNewDependents(account);
-        } else if (!choice.equals("S")){
-            System.out.println("Opção inválida, tente novamente.");
-            editAccount(account);
+        System.out.println("Para modificar o overdraft digite O");
+        System.out.println("Para editar os dependentes da conta digite D");
+        System.out.println("Para retornar ao menu principal digite V");
+
+        switch (getTreatedInput()) {
+            case "O" -> account.setOverdraft(askOverdraft());
+            case "D" -> setNewDependents(account);
+            case "V" -> menu();
+            default -> {
+                System.out.println("Opção inválida, tente novamente.");
+                editAccount(account);
+            }
         }
     }
+
 }
