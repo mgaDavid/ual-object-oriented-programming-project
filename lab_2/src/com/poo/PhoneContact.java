@@ -10,11 +10,11 @@ public class PhoneContact {
         this.type = type;
     }
 
-    public Object getPhoneNumber(){
+    public int getPhoneNumber(){
         return this.phoneNumber;
     }
 
-    public Object getType(){
+    public String getType(){
         return this.type;
     }
 

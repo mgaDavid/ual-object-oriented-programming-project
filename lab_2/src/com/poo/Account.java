@@ -33,15 +33,15 @@ public class Account {
         return mainClient;
     }
 
-    public Object getOtherClients(){
+    public ArrayList<Client> getOtherClients(){
         return otherClients;
     }
 
-    public Object getBalance(){
+    public double getBalance(){
         return balance;
     }
 
-    public Object getOverdraft(){
+    public boolean getOverdraft(){
         return overdraft;
     }
 
@@ -55,27 +55,23 @@ public class Account {
         this.otherClients = otherClients;
     }
 
-    public void setBalance(double balance){
-        this.balance = balance;
-    }
+    public void setBalance(double balance){ this.balance += balance; }
 
     public void setOverdraft(boolean overdraft){
         this.overdraft = overdraft;
     }
 
-    public boolean belongToClient(Client client){
-        if (client.getDocument().equals(mainClient.getDocument())){
-            return true;
-        }
+    public void registerOperation(Operation operation, double tax){
+        this.accountOps.add(operation);
+        setBalance(operation.getAmount() - tax);
+    }
 
-        if (otherClients.size() > 0){
-            for (Client dependent: otherClients){
-                if (dependent.getDocument().equals(dependent.getDocument())){
-                    return true;
-                }
-            }
-        }
-        return false;
+    public void addDependent(Client client){
+        this.otherClients.add(client);
+    }
+
+    public void removeDependent(Client client){
+        this.otherClients.remove(client);
     }
 
 }
