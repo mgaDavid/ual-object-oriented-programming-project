@@ -222,7 +222,6 @@ public class Bank {
 
         Operation operation = new Operation(type, value, this.tax);
         validateOperation(operation, account);
-        System.out.println("Operação realizada com sucesso!");
     }
 
     private Client getBankClient(IdDocument document){
@@ -284,17 +283,19 @@ public class Bank {
 
             switch (getTreatedInput()) {
                 case "E" -> {
-                    if (!account.getDependents().contains(dependent)) {
+                    if (!dependent.isMyAccount(account.getNumber())) {
                         System.out.println("O cliente inserido não é um dependente dessa conta.");
                     } else {
                         account.removeDependent(dependent);
+                        System.out.println("Cliente removido dos dependentes com sucesso!");
                     }
                 }
                 case "A" -> {
-                    if (!account.getDependents().contains(dependent)) {
+                    if (!dependent.isMyAccount(account.getNumber())) {
                         account.addDependent(dependent);
+                        System.out.println("Cliente adicionado às dependentes com sucesso!");
                     } else {
-                        System.out.println("O cliente inserido já é um dependente dessa conta.");
+                        System.out.println("O cliente inserido já é um dependente/titular dessa conta.");
                     }
                 }
                 default -> System.out.println("Opção inválida, tente novamente.");
@@ -362,7 +363,11 @@ public class Bank {
             default -> System.out.println("Opção inválida, tente novamente.");
 
         }
+
         if (!choice.equals("P")) accountMenu(account);
+        //accountMenu(account, choice);
+        //if (!oldChoice.equals("P")){
+
     }
 
     private void listOperations(Account account) {
@@ -382,7 +387,8 @@ public class Bank {
         switch (choice) {
             case "O" -> account.setOverdraft(askOverdraft());
             case "D" -> setNewDependents(account);
-            case "V" -> accountMenu(account);
+            //case "V" -> accountMenu(account);
+            case "V" -> {}
             default -> System.out.println("Opção inválida, tente novamente.");
 
         }

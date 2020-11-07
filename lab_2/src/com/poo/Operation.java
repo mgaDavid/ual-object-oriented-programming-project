@@ -42,12 +42,10 @@ public class Operation {
     @Override
     public String toString(){
         DateTimeFormatter newFormat = DateTimeFormatter
-                .ofPattern("uuuu-MM-dd HH:mm:ss")
+                .ofPattern("uuuu/MM/dd HH:mm:ss")
                 .withResolverStyle(ResolverStyle.STRICT);
 
         String date = this.date.format(newFormat);
-
-        //String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(this.date);
         String amount = new DecimalFormat("0.0000").format(this.getAmount());
 
         return "Data: " + date + " Tipo: " + this.getType() + " Taxa: " + this.getTax() + " Valor: " + amount;

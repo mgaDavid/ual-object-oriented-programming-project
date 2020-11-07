@@ -30,7 +30,6 @@ public class Account {
         return dependents;
     }
 
-
     public double getBalance(){
         return this.balance;
     }
