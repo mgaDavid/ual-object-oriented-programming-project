@@ -2,7 +2,6 @@ package com.poo;
 
 
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -198,9 +197,7 @@ public class Bank {
             }
             case "4" -> client.setContact(validateContact());
             case "5" -> {}
-            default -> {
-                System.out.println("Opção inválida, tente novamente.");
-            }
+            default -> System.out.println("Opção inválida, tente novamente.");
         }
 
         if (!choice.equals("5")) editClient(client);
@@ -415,7 +412,7 @@ public class Bank {
 
     /**
      * Method to remove spaces from string and to place string in upper case
-     * @return
+     * @return Formatted String
      */
     private String getTreatedInput() {
         return scan.nextLine().strip().toUpperCase();
