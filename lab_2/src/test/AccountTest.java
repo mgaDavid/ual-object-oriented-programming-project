@@ -1,46 +1,48 @@
 package test;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getNumber() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getDependents() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getBalance() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getOverdraft() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getOperations() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setOverdraft() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void registerOperation() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void addDependent() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void removeDependent() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getClient() {
     }
 }

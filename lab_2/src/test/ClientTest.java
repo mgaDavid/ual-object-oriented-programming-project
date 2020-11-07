@@ -1,70 +1,72 @@
 package test;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClientTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getDocument() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getAccounts() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setName() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setAddress() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setEmail() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setContact() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void addAccount() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getAccount() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void isMyAccount() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testEquals() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getBirthday() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getAddress() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getName() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getEmail() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getContact() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void removeAccount() {
     }
 }
