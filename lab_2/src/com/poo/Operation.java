@@ -3,6 +3,8 @@ package com.poo;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 
 import static java.lang.Math.abs;
 
@@ -39,7 +41,13 @@ public class Operation {
 
     @Override
     public String toString(){
-        String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(this.date);
+        DateTimeFormatter newFormat = DateTimeFormatter
+                .ofPattern("uuuu-MM-dd HH:mm:ss")
+                .withResolverStyle(ResolverStyle.STRICT);
+
+        String date = this.date.format(newFormat);
+
+        //String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(this.date);
         String amount = new DecimalFormat("0.0000").format(this.getAmount());
 
         return "Data: " + date + " Tipo: " + this.getType() + " Taxa: " + this.getTax() + " Valor: " + amount;
