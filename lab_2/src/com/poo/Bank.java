@@ -301,7 +301,6 @@ public class Bank {
                 default -> System.out.println("Opção inválida, tente novamente.");
             }
         }
-        editAccount(account);
     }
 
     private boolean askOverdraft(){
@@ -361,7 +360,6 @@ public class Bank {
             case "E" -> editAccount(account);
             case "P" -> {}
             default -> System.out.println("Opção inválida, tente novamente.");
-
         }
 
         if (!choice.equals("P")) accountMenu(account);
@@ -387,10 +385,8 @@ public class Bank {
         switch (choice) {
             case "O" -> account.setOverdraft(askOverdraft());
             case "D" -> setNewDependents(account);
-            //case "V" -> accountMenu(account);
             case "V" -> {}
             default -> System.out.println("Opção inválida, tente novamente.");
-
         }
 
         if (!choice.equals("V")) editAccount(account);
