@@ -50,11 +50,9 @@ class ClientTest {
 
     @Test
     void getAccounts() {
-        ArrayList<Account> clientAccounts = new ArrayList<>();
-        clientAccounts.add(account);
-
-        assertEquals(clientAccounts.size(), client.getAccounts().size());
-        assertEquals(clientAccounts.get(0), client.getAccounts().get(0));
+        assertEquals(client.getAccounts().size(), 1);
+        assertTrue(client.getAccounts().contains(account));
+        assertFalse(client.getAccounts().contains(account2));
     }
 
     @Test
