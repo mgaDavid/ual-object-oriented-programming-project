@@ -28,8 +28,6 @@ public class Account {
      *
      * @param number references the client number
      * @param client references the constructor client
-     * @param dependents references the possibility of the Account to have other clients
-     * @param operations references the list of operations on this account (debit/credit)
      * @param initialDeposit references the initial deposit of the client
      * @param overdraft references if the client is allowed to perform overdraft on the balance
      */

@@ -30,7 +30,6 @@ public class Operation {
      * We have the following parameters
      *
      * @param type (Type of operation - Credit of Debit)
-     * @param date (Current Date and time when the operation is registered)
      * @param amount (Amount of the operation)
      * @param tax (Tax amount in the operation)
      */

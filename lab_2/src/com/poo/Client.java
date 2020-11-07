@@ -33,7 +33,6 @@ public class Client {
      * @param address (Address of the client)
      * @param email (email of the client)
      * @param contact (Contact information of the client)
-     * @param myAccounts (List of Clients Accounts)
      */
     public Client(String name, IdDocument document, Date birthday, String address, String email, PhoneContact contact){
         this.name = name;
