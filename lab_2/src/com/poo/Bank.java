@@ -464,8 +464,6 @@ public class Bank {
         }
 
         if (!choice.equals("P")) accountMenu(account);
-        //accountMenu(account, choice);
-        //if (!oldChoice.equals("P")){
 
     }
 
