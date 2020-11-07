@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AccountTest {
 
     private static Account account, account2;
+    private static Client client, client2;
     private static Operation operation1, operation2, operation3;
 
     @BeforeEach
@@ -23,7 +24,7 @@ class AccountTest {
         PhoneContact phoneContact = new PhoneContact(123456789, "TELEMÓVEL");
 
         Date birthday = new SimpleDateFormat("yyyy/MM/dd").parse("2002/11/07");
-        Client client = new Client("DIEGO SOARES", document, birthday, "UAL", "diego@test.com", phoneContact);
+        client = new Client("DIEGO SOARES", document, birthday, "UAL", "diego@test.com", phoneContact);
 
         account = new Account(1, client, 100, true);
         client.addAccount(account);
@@ -31,7 +32,7 @@ class AccountTest {
         IdDocument document2 = new IdDocument("1234", "BI");
         PhoneContact phoneContact2 = new PhoneContact(123456788, "TELEMÓVEL");
         Date birthday2 = new SimpleDateFormat("yyyy/MM/dd").parse("2000/11/07");
-        Client client2 = new Client("DAVID ARCO", document2, birthday2, "UAL 2", "david@test.com", phoneContact2);
+        client2 = new Client("DAVID ARCO", document2, birthday2, "UAL 2", "david@test.com", phoneContact2);
 
         account2 = new Account(2, client2, 0, false);
         client2.addAccount(account2);
@@ -52,6 +53,9 @@ class AccountTest {
 
     @Test
     void getDependents() {
+        account.addDependent(client2);
+        assertEquals(1, account.getDependents().size());
+        assertEquals(client2, account.getDependents().get(0));
     }
 
     @Test
@@ -85,19 +89,22 @@ class AccountTest {
         Operation operation4 = new Operation("CRÉDITO", 999, 0.42);
         account.registerOperation(operation4);
         assertEquals(operation4, account.getOperations().get(4));
-
     }
 
     @Test
     void addDependent() {
-        account.addDependent();
+        account.addDependent(client2);
+        assertEquals(client2, account.getDependents().get(0));
     }
 
     @Test
     void removeDependent() {
+        account.removeDependent(client2);
+        assertEquals(0, account.getDependents().size());
     }
 
     @Test
     void getClient() {
+        assertEquals(client, account.getClient());
     }
 }
