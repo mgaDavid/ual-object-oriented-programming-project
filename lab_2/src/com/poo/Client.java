@@ -1,5 +1,7 @@
 package com.poo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -69,4 +71,27 @@ public class Client {
 
     public boolean equals(IdDocument document){ return document.equals(this.getDocument()); }
 
+    public String getBirthday() {
+        return new SimpleDateFormat("yyyy/MM/dd").format(this.birthday);
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public PhoneContact getContact() {
+        return contact;
+    }
 }

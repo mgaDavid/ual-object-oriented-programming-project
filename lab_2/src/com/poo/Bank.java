@@ -17,10 +17,12 @@ public class Bank {
     private double tax = 0.42;
 
     public void menu() {
-        System.out.println("RC - Registo de cliente");
-        System.out.println("AC - Alteração de dados de cliente");
-        System.out.println("NC - Registo de conta");
-        System.out.println("EC - Editar e consultar dados de conta");
+        System.out.println("Digite:");
+        System.out.println("RC - para registo de cliente");
+        System.out.println("AC - para alteração de dados de cliente");
+        System.out.println("NC - para registo de conta");
+        System.out.println("EC - para editar e consultar dados de conta");
+        System.out.println("CD - para consultar dados de um cliente");
         System.out.println("S  - Sair");
 
         switch (getTreatedInput()) {
@@ -28,14 +30,31 @@ public class Bank {
             case "AC" -> changeClientRecord();
             case "NC" -> accountRecord();
             case "EC" -> manageAccount();
+            case "CD" -> consultClient();
             case "S" -> {
                 System.out.println("Encerrando..");
                 System.exit(0);
             }
-            default -> System.out.println("Opção inválida, tente novamente. (MENSAGEM DO menu)");
+            default -> System.out.println("Opção inválida, tente novamente.");
         }
 
         menu();
+    }
+
+    private void consultClient() {
+        IdDocument document = askDocument();
+
+        if (!clientExist(document)){
+            System.out.println("Cliente não cadastrado na nossa base de dados.");
+        } else {
+            Client client = getBankClient(document);
+            System.out.println("Nome: " + client.getName());
+            System.out.println("Morada: " + client.getAddress());
+            System.out.println("Tipo de contato: " + client.getContact().getType());
+            System.out.println("Número do contato: " + client.getContact().getNumber());
+            System.out.println("E-mail: " + client.getEmail());
+            System.out.println("Data de nascimento: " + client.getBirthday());
+        }
     }
 
     private void clientRecord(){
@@ -58,7 +77,6 @@ public class Bank {
             PhoneContact contact = validateContact();
             clients.add(new Client(name, document, birthday, address, email, contact));
         }
-        menu();
     }
 
     private IdDocument askDocument(){
@@ -113,13 +131,16 @@ public class Bank {
     }
 
     private void editClient(Client client){
-        System.out.println("1 - Nome do cliente");
-        System.out.println("2 - Morada");
-        System.out.println("3 - email");
-        System.out.println("4 - Contacto");
-        System.out.println("5 - Sair para menu principal");
+        System.out.println("Digite");
+        System.out.println("1 - Para editar o nome do cliente");
+        System.out.println("2 - Para editar a morada");
+        System.out.println("3 - Para editar o email");
+        System.out.println("4 - Para editar o contacto");
+        System.out.println("5 - Para retornar ao menu anterior");
 
-        switch (getTreatedInput()) {
+        String choice = getTreatedInput();
+
+        switch (choice) {
             case "1" -> {
                 System.out.println("Introduza o novo nome");
                 client.setName(getTreatedInput());
@@ -133,8 +154,15 @@ public class Bank {
                 client.setEmail(getTreatedInput());
             }
             case "4" -> client.setContact(validateContact());
-            case "5" -> menu();
+            case "5" -> {}
+            default -> {
+                System.out.println("Opção inválida, tente novamente.");
+                editClient(client);
+            }
         }
+
+        if (!choice.equals("5")) editClient(client);
+
     }
 
     private void changeClientRecord(){
@@ -144,7 +172,6 @@ public class Bank {
             editClient(getBankClient(document));
         } else {
             System.out.println("Cliente não existe na base de dados.");
-            menu();
         }
     }
 
@@ -167,12 +194,10 @@ public class Bank {
             client.addAccount(newAccount);
         }
 
-        menu();
     }
 
     private double validateAmount(String amount) {
         try {
-
             double deposit = Double.parseDouble(amount);
             boolean fail = (BigDecimal.valueOf(deposit).scale() > 4);
 
@@ -196,7 +221,7 @@ public class Bank {
         Operation operation = new Operation(type, value, this.tax);
         validateOperation(operation, account);
 
-        menu();
+        accountMenu(account);
     }
 
     private Client getBankClient(IdDocument document){
@@ -325,17 +350,18 @@ public class Bank {
         System.out.println("E  - Para editar os dados da conta");
         System.out.println("P  - Para retornar ao menu principal");
 
-        switch (getTreatedInput()) {
+        String choice = getTreatedInput();
+
+        switch (choice) {
             case "SC" -> System.out.println("O saldo da conta é: " + account.getBalance());
             case "M" -> newOperation(account);
             case "LM" -> listOperations(account);
             case "E" -> editAccount(account);
-            case "P" -> menu();
-            default -> {
-                System.out.println("Opção inválida, tente novamente. (MENSAGEM DO accountMenu)");
-                accountMenu(account);
-            }
+            case "P" -> {}
+            default -> System.out.println("Opção inválida, tente novamente.");
+
         }
+        if (!choice.equals("P")) accountMenu(account);
     }
 
     private void listOperations(Account account) {
@@ -349,18 +375,18 @@ public class Bank {
         System.out.println("O - Para modificar o overdraft");
         System.out.println("D - Para editar os dependentes da conta");
         System.out.println("V - Para retornar ao menu da conta");
-        System.out.println("P - Para retornar ao menu principal");
 
-        switch (getTreatedInput()) {
+        String choice = getTreatedInput();
+
+        switch (choice) {
             case "O" -> account.setOverdraft(askOverdraft());
             case "D" -> setNewDependents(account);
             case "V" -> accountMenu(account);
-            case "P" -> menu();
-            default -> {
-                System.out.println("Opção inválida, tente novamente. (MENSAGEM DO editAccount)");
-                editAccount(account);
-            }
+            default -> System.out.println("Opção inválida, tente novamente.");
+
         }
+
+        if (!choice.equals("V")) editAccount(account);
     }
 
 }

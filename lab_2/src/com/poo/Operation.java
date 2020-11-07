@@ -35,6 +35,7 @@ public class Operation {
         return this.tax;
     }
 
+    @Override
     public String toString(){
         return "Data: " + this.getDate().toString() + " Tipo: " + this.getType() + " Taxa: " + this.getTax() + " Valor: " + this.getAmount();
     }

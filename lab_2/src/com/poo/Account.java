@@ -8,7 +8,7 @@ public class Account {
     private Client client;
     private ArrayList<Client> dependents;
     private ArrayList<Operation> operations;
-    private double balance = 0;
+    private double balance;
     private boolean overdraft;
 
     public Account(int number, Client client, double initialDeposit, boolean overdraft) {
@@ -16,8 +16,11 @@ public class Account {
         this.client = client;
         this.dependents = new ArrayList<>();
         this.operations = new ArrayList<>();
+        this.balance = 0;
         this.overdraft = overdraft;
-        this.registerOperation(new Operation("CRÉDITO", initialDeposit, 0));
+        if (initialDeposit > 0){
+            this.registerOperation(new Operation("CRÉDITO", initialDeposit, 0));
+        }
     }
 
     public int getNumber(){ return this.number; }
