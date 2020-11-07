@@ -1,6 +1,7 @@
 package com.poo;
 
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class Bank {
     private ArrayList<Client> clients = new ArrayList<>();
     private Scanner scan = new Scanner(System.in);
     private int accountsCounter;
-    private double tax = 0.42;
+    private BigDecimal tax = new BigDecimal(0.42);
 
     /**
      * Main Menu of the program
@@ -338,7 +339,11 @@ public class Bank {
      * @param account (account where the operation is being performed)
      */
     private void validateOperation(Operation operation, Account account) {
-        if (account.getOverdraft() || operation.getType().equals("CRÉDITO") || account.getBalance() >= -operation.getAmount()){
+        if (
+                account.getOverdraft() ||
+                operation.getType().equals("CRÉDITO") ||
+                account.getBalance().add(operation.getAmount()).compareTo(new BigDecimal(0).setScale(4, RoundingMode.HALF_UP)) >= 0
+        ){
             account.registerOperation(operation);
             System.out.println("Operação efetuada com sucesso!");
         } else {
@@ -453,7 +458,7 @@ public class Bank {
         String choice = getTreatedInput();
 
         switch (choice) {
-            case "SC" -> System.out.println("O saldo da conta é: " + doubleToString(account.getBalance()));
+            case "SC" -> System.out.println("O saldo da conta é: " + account.getBalance());
             case "M" -> newOperation(account);
             case "LM" -> listOperations(account);
             case "E" -> editAccount(account);
@@ -497,15 +502,6 @@ public class Bank {
         }
 
         if (!choice.equals("V")) editAccount(account);
-    }
-
-    /**
-     * Method to return amount in a formatted string
-     * @param amount (amount to be parsed)
-     * @return formatted amount
-     */
-    public String doubleToString(double amount){
-        return new DecimalFormat("0.0000").format(amount);
     }
 
 }

@@ -1,6 +1,8 @@
 package com.poo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.math.RoundingMode;
 
 
 /**
@@ -19,7 +21,7 @@ public class Account {
     private Client client;
     private ArrayList<Client> dependents;
     private ArrayList<Operation> operations;
-    private double balance;
+    private BigDecimal balance;
     private boolean overdraft;
 
     /**
@@ -36,10 +38,10 @@ public class Account {
         this.client = client;
         this.dependents = new ArrayList<>();
         this.operations = new ArrayList<>();
-        this.balance = 0;
+        this.balance = new BigDecimal(0).setScale(4, RoundingMode.HALF_UP);
         this.overdraft = overdraft;
         if (initialDeposit > 0){
-            this.registerOperation(new Operation("CRÉDITO", initialDeposit, 0));
+            this.registerOperation(new Operation("CRÉDITO", initialDeposit, new BigDecimal(0).setScale(2, RoundingMode.HALF_UP)));
         }
     }
 
@@ -61,7 +63,7 @@ public class Account {
      * method to return the Balance of the account
      * @return balance (Current Balance)
      */
-    public double getBalance(){
+    public BigDecimal getBalance(){
         return this.balance;
     }
 
@@ -83,7 +85,7 @@ public class Account {
      * method to set the balance on the account
      * @param balance set current balance
      */
-    private void setBalance(double balance) { this.balance = balance; }
+    private void setBalance(BigDecimal balance) { this.balance = balance.setScale(4, RoundingMode.HALF_UP); }
 
     /**
      * Boolean method to set if the customer is allowed to perform Overdraft in the account
@@ -99,7 +101,7 @@ public class Account {
      */
     public void registerOperation(Operation operation) {
         this.operations.add(operation);
-        setBalance(this.getBalance() + (operation.getAmount() - operation.getTax()));
+        setBalance(this.getBalance().add(operation.getAmount()).subtract(operation.getTax()));
     }
 
     /**

@@ -1,12 +1,13 @@
 package com.poo;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 
 import static java.lang.Math.abs;
+import java.math.RoundingMode;
 
 /**
  * In this class we have the Operations constructor of our program
@@ -20,10 +21,10 @@ import static java.lang.Math.abs;
 
 public class Operation {
 
-    private final double amount;
+    private final BigDecimal amount;
     private final LocalDateTime date;
     private final String type;
-    private final double tax;
+    private final BigDecimal tax;
 
     /**
      * This os the Operations constructor
@@ -33,19 +34,19 @@ public class Operation {
      * @param amount (Amount of the operation)
      * @param tax (Tax amount in the operation)
      */
-    public Operation(String type, double amount, double tax) {
-        if (type.equals("DÉBITO")) this.amount = -abs(amount);
-        else this.amount = abs(amount);
+    public Operation(String type, double amount, BigDecimal tax) {
+        if (type.equals("DÉBITO")) this.amount = new BigDecimal(-abs(amount)).setScale(4, RoundingMode.HALF_UP);
+        else this.amount = new BigDecimal(abs(amount)).setScale(4, RoundingMode.HALF_UP);
         this.date = LocalDateTime.now();
         this.type = type;
-        this.tax = tax;
+        this.tax = tax.setScale(2, RoundingMode.HALF_UP);
     }
 
     /**
      * Method to return the Amount of the operation
      * @return amount (Amount of the operation)
      */
-    public double getAmount(){
+    public BigDecimal getAmount(){
         return this.amount;
     }
 
@@ -69,7 +70,7 @@ public class Operation {
      * Method to return current Tax used in the operation
      * @return tax (Tax used in the operation)
      */
-    public double getTax() {
+    public BigDecimal getTax() {
         return this.tax;
     }
 
@@ -84,9 +85,8 @@ public class Operation {
                 .withResolverStyle(ResolverStyle.STRICT);
 
         String date = this.date.format(newFormat);
-        String amount = new DecimalFormat("0.0000").format(this.getAmount());
 
-        return "Data: " + date + " Tipo: " + this.getType() + " Taxa: " + this.getTax() + " Valor: " + amount;
+        return "Data: " + date + " Tipo: " + this.getType() + " Taxa: " + this.getTax() + " Valor: " + this.getAmount();
     }
 
 }
