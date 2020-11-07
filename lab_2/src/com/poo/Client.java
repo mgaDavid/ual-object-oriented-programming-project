@@ -89,4 +89,8 @@ public class Client {
     public PhoneContact getContact() {
         return contact;
     }
+
+    public void removeAccount(Account account){
+        this.myAccounts.remove(account);
+    }
 }

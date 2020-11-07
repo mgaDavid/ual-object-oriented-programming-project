@@ -290,6 +290,7 @@ public class Bank {
                             System.out.println("Você não pode excluir o titular da conta.");
                         } else {
                             account.removeDependent(dependent);
+                            dependent.removeAccount(account);
                             System.out.println("Cliente removido dos dependentes com sucesso!");
                         }
                     }
