@@ -1,5 +1,7 @@
 package com.poo;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 
 import static java.lang.Math.abs;
@@ -37,7 +39,10 @@ public class Operation {
 
     @Override
     public String toString(){
-        return "Data: " + this.getDate().toString() + " Tipo: " + this.getType() + " Taxa: " + this.getTax() + " Valor: " + this.getAmount();
+        String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(this.date);
+        String amount = new DecimalFormat("0.0000").format(this.getAmount());
+
+        return "Data: " + date + " Tipo: " + this.getType() + " Taxa: " + this.getTax() + " Valor: " + amount;
     }
 
 }

@@ -2,6 +2,7 @@ package com.poo;
 
 import java.util.ArrayList;
 
+
 public class Account {
 
     private final int number;
@@ -29,8 +30,9 @@ public class Account {
         return dependents;
     }
 
+
     public double getBalance(){
-        return balance;
+        return this.balance;
     }
 
     public boolean getOverdraft(){

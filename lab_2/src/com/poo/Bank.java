@@ -1,6 +1,7 @@
 package com.poo;
 
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +18,7 @@ public class Bank {
     private double tax = 0.42;
 
     public void menu() {
-        System.out.println("Digite:");
+        System.out.println("\nDigite:");
         System.out.println("RC - para registo de cliente");
         System.out.println("AC - para alteração de dados de cliente");
         System.out.println("NC - para registo de conta");
@@ -76,6 +77,7 @@ public class Bank {
 
             PhoneContact contact = validateContact();
             clients.add(new Client(name, document, birthday, address, email, contact));
+            System.out.println("Cliente registado com sucesso!");
         }
     }
 
@@ -131,7 +133,7 @@ public class Bank {
     }
 
     private void editClient(Client client){
-        System.out.println("Digite");
+        System.out.println("\nDigite");
         System.out.println("1 - Para editar o nome do cliente");
         System.out.println("2 - Para editar a morada");
         System.out.println("3 - Para editar o email");
@@ -157,7 +159,6 @@ public class Bank {
             case "5" -> {}
             default -> {
                 System.out.println("Opção inválida, tente novamente.");
-                editClient(client);
             }
         }
 
@@ -192,6 +193,7 @@ public class Bank {
             accountsCounter += 1;
             Account newAccount = new Account(accountsCounter, client, initialDeposit, overdraft);
             client.addAccount(newAccount);
+            System.out.println("Conta número " + accountsCounter + " criada com sucesso!");
         }
 
     }
@@ -220,8 +222,7 @@ public class Bank {
 
         Operation operation = new Operation(type, value, this.tax);
         validateOperation(operation, account);
-
-        accountMenu(account);
+        System.out.println("Operação realizada com sucesso!");
     }
 
     private Client getBankClient(IdDocument document){
@@ -343,7 +344,7 @@ public class Bank {
     }
 
     public void accountMenu(Account account){
-        System.out.println("Digite:");
+        System.out.println("\nDigite:");
         System.out.println("SC - Para consulta de saldo");
         System.out.println("M  - Para adicionar um movimento");
         System.out.println("LM - Para listar todos os movimentos");
@@ -353,7 +354,7 @@ public class Bank {
         String choice = getTreatedInput();
 
         switch (choice) {
-            case "SC" -> System.out.println("O saldo da conta é: " + account.getBalance());
+            case "SC" -> System.out.println("O saldo da conta é: " + doubleToString(account.getBalance()));
             case "M" -> newOperation(account);
             case "LM" -> listOperations(account);
             case "E" -> editAccount(account);
@@ -371,7 +372,7 @@ public class Bank {
     }
 
     private void editAccount(Account account){
-        System.out.println("Digite:");
+        System.out.println("\nDigite:");
         System.out.println("O - Para modificar o overdraft");
         System.out.println("D - Para editar os dependentes da conta");
         System.out.println("V - Para retornar ao menu da conta");
@@ -387,6 +388,10 @@ public class Bank {
         }
 
         if (!choice.equals("V")) editAccount(account);
+    }
+
+    public String doubleToString(double amount){
+        return new DecimalFormat("0.0000").format(amount);
     }
 
 }
