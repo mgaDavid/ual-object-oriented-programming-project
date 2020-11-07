@@ -297,6 +297,7 @@ public class Bank {
                 case "A" -> {
                     if (!dependent.isMyAccount(account.getNumber())) {
                         account.addDependent(dependent);
+                        dependent.addAccount(account);
                         System.out.println("Cliente adicionado às dependentes com sucesso!");
                     } else {
                         System.out.println("O cliente inserido já é um dependente/titular dessa conta.");

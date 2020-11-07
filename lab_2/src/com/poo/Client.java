@@ -74,10 +74,6 @@ public class Client {
         return new SimpleDateFormat("yyyy/MM/dd").format(this.birthday);
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
     public String getAddress() {
         return address;
     }
