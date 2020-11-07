@@ -59,4 +59,7 @@ public class Account {
         this.dependents.remove(client);
     }
 
+    public Client getClient() {
+        return client;
+    }
 }

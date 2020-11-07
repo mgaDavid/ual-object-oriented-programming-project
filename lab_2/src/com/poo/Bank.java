@@ -286,8 +286,12 @@ public class Bank {
                     if (!dependent.isMyAccount(account.getNumber())) {
                         System.out.println("O cliente inserido não é um dependente dessa conta.");
                     } else {
-                        account.removeDependent(dependent);
-                        System.out.println("Cliente removido dos dependentes com sucesso!");
+                        if (account.getClient().equals(document)){
+                            System.out.println("Você não pode excluir o titular da conta.");
+                        } else {
+                            account.removeDependent(dependent);
+                            System.out.println("Cliente removido dos dependentes com sucesso!");
+                        }
                     }
                 }
                 case "A" -> {
