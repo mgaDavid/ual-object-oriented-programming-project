@@ -11,12 +11,25 @@ import java.text.SimpleDateFormat;
 import java.math.BigDecimal;
 import java.lang.System;
 
+/**
+ * In this class we have the all the Bank related operations of our program
+ *
+ * @author Bruno Teodoro
+ * @author David Arco
+ * @author Diego Soares
+ * @version 1.0
+ * @since 08/11/2020
+ */
+
 public class Bank {
     private ArrayList<Client> clients = new ArrayList<>();
     private Scanner scan = new Scanner(System.in);
     private int accountsCounter;
     private double tax = 0.42;
 
+    /**
+     * Main Menu of the program
+     */
     public void menu() {
         System.out.println("\nDigite:");
         System.out.println("RC - para registo de cliente");
@@ -42,6 +55,9 @@ public class Bank {
         menu();
     }
 
+    /**
+     * Method to print out the Client information
+     */
     private void consultClient() {
         IdDocument document = askDocument();
 
@@ -58,6 +74,9 @@ public class Bank {
         }
     }
 
+    /**
+     * Method the record Client Information into the Database
+     */
     private void clientRecord() {
         IdDocument document = askDocument();
 
@@ -81,6 +100,10 @@ public class Bank {
         }
     }
 
+    /**
+     * Method to verify if provided document is present in the database
+     * @return document (if true returns provided document)
+     */
     private IdDocument askDocument() {
         System.out.println("Introduza o tipo do documento (PASSAPORTE ou BI/CC):");
         String documentType = getTreatedInput();
@@ -96,6 +119,11 @@ public class Bank {
         return new IdDocument(getTreatedInput(), documentType);
     }
 
+    /**
+     * Method to verify if client exists in Database
+     * @param document (type of document and number)
+     * @return True or False
+     */
     private boolean clientExist(IdDocument document) {
         for (Client thisClient : clients) {
             if (thisClient.equals(document)) {
@@ -106,6 +134,10 @@ public class Bank {
         return false;
     }
 
+    /**
+     * Method to validate if the date being inserted is in the correct format
+     * @return validateDate (returns only when date being inserted is in the correct format)
+     */
     private Date validateDate() {
         System.out.println("Introduza a data de nascimento - yyyy/mm/dd");
         String birthday = getTreatedInput();
@@ -118,6 +150,10 @@ public class Bank {
         }
     }
 
+    /**
+     * Method to validate if the contact information provided is correct
+     * @return validateContact (returns contact information only after contact is in correct format)
+     */
     private PhoneContact validateContact() {
         System.out.println("Introduza o numero de telefone");
         String phoneString = getTreatedInput();
@@ -132,6 +168,10 @@ public class Bank {
         }
     }
 
+    /**
+     * Method to edit client parameters
+     * @param client (Client object)
+     */
     private void editClient(Client client) {
         System.out.println("\nDigite");
         System.out.println("1 - Para editar o nome do cliente");
@@ -166,6 +206,9 @@ public class Bank {
 
     }
 
+    /**
+     * Method to check if client exists in Database before editing the client Record
+     */
     private void changeClientRecord() {
         IdDocument document = askDocument();
 
@@ -176,6 +219,9 @@ public class Bank {
         }
     }
 
+    /**
+     * Method to add an account to client
+     */
     private void accountRecord() {
         IdDocument document = askDocument();
 
@@ -198,6 +244,11 @@ public class Bank {
 
     }
 
+    /**
+     * Method to Validate the if the amount entered is correct
+     * @param amount (amount to be validated)
+     * @return validateAmount (return validated amount after being checked)
+     */
     private double validateAmount(String amount) {
         try {
             double deposit = Double.parseDouble(amount);
@@ -214,6 +265,10 @@ public class Bank {
         }
     }
 
+    /**
+     * Method to register a new operation in the Account
+     * @param account (Account where where the operation is being performed)
+     */
     private void newOperation(Account account) {
         String type = askOperationType();
 
@@ -224,6 +279,11 @@ public class Bank {
         validateOperation(operation, account);
     }
 
+    /**
+     * Method to get Client from Client list
+     * @param document (Client document)
+     * @return Client (if the client exists)
+     */
     private Client getBankClient(IdDocument document) {
         Client thisClient = clients.get(0);
         for (Client client: clients){
@@ -235,6 +295,11 @@ public class Bank {
         return thisClient;
     }
 
+    /**
+     * Method to validate if the number being parsed is an integer
+     * @param integer (number being parsed)
+     * @return validateInt (return validated number only after being corrected parsed)
+     */
     private int validateInt(String integer) {
         try{
             return Integer.parseInt(integer);
@@ -244,6 +309,10 @@ public class Bank {
         }
     }
 
+    /**
+     * Method to return what type of Operation to perform (Credit or Debit)
+     * @return operationType (Credit or Debit only after operating being parsed is correct)
+     */
     private String askOperationType() {
         try{
             System.out.println("Qual é o tipo de operação a ser realizada? (DÉBITO ou CRÉDITO)");
@@ -263,6 +332,11 @@ public class Bank {
 
     }
 
+    /**
+     * Method to validate operation based on the current balance
+     * @param operation (Operation type - Credit or Debit)
+     * @param account (account where the operation is being performed)
+     */
     private void validateOperation(Operation operation, Account account) {
         if (account.getOverdraft() || operation.getType().equals("CRÉDITO") || account.getBalance() >= -operation.getAmount()){
             account.registerOperation(operation);
@@ -272,6 +346,10 @@ public class Bank {
         }
     }
 
+    /**
+     * Method to set dependents on the Account
+     * @param account (Account where the dependents are being set)
+     */
     private void setNewDependents(Account account) {
         IdDocument document = askDocument();
         if (!clientExist(document)) {
@@ -309,6 +387,10 @@ public class Bank {
         }
     }
 
+    /**
+     * Boolean method to ask if the Client is allowed to perform an overdraft
+     * @return True or False
+     */
     private boolean askOverdraft() {
         System.out.println("Deseja habilitar a conta à operações à descoberto? (S/N)");
 
@@ -326,10 +408,17 @@ public class Bank {
         }
     }
 
+    /**
+     * Method to remove spaces from string and to place string in upper case
+     * @return
+     */
     private String getTreatedInput() {
         return scan.nextLine().strip().toUpperCase();
     }
 
+    /**
+     * Method validate accounts based on documentation being provided
+     */
     public void manageAccount() {
         IdDocument document = askDocument();
         if (!clientExist(document)){
@@ -349,6 +438,10 @@ public class Bank {
         }
     }
 
+    /**
+     * Menu used to manage the accounts
+     * @param account (account information)
+     */
     public void accountMenu(Account account) {
         System.out.println("\nDigite:");
         System.out.println("SC - Para consulta de saldo");
@@ -374,12 +467,20 @@ public class Bank {
 
     }
 
+    /**
+     * Method to list operation in account
+     * @param account (account to be queried)
+     */
     private void listOperations(Account account) {
         for (Operation operation: account.getOperations()){
             System.out.println(operation);
         }
     }
 
+    /**
+     * Menu used to edit values from the Account
+     * @param account (current account to be edited)
+     */
     private void editAccount(Account account) {
         System.out.println("\nDigite:");
         System.out.println("O - Para modificar o overdraft");
@@ -398,6 +499,11 @@ public class Bank {
         if (!choice.equals("V")) editAccount(account);
     }
 
+    /**
+     * Method to return amount in a formatted string
+     * @param amount (amount to be parsed)
+     * @return formatted amount
+     */
     public String doubleToString(double amount){
         return new DecimalFormat("0.0000").format(amount);
     }
