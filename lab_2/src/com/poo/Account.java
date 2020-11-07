@@ -40,13 +40,13 @@ public class Account {
 
     public ArrayList<Operation> getOperations() { return operations; }
 
-    private void setBalance(double balance){ this.balance = balance; }
+    private void setBalance(double balance) { this.balance = balance; }
 
     public void setOverdraft(boolean overdraft){
         this.overdraft = overdraft;
     }
 
-    public void registerOperation(Operation operation){
+    public void registerOperation(Operation operation) {
         this.operations.add(operation);
         setBalance(this.getBalance() + (operation.getAmount() - operation.getTax()));
     }

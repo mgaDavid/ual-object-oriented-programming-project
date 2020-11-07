@@ -58,7 +58,7 @@ public class Bank {
         }
     }
 
-    private void clientRecord(){
+    private void clientRecord() {
         IdDocument document = askDocument();
 
         if (clientExist(document)){
@@ -81,7 +81,7 @@ public class Bank {
         }
     }
 
-    private IdDocument askDocument(){
+    private IdDocument askDocument() {
         System.out.println("Introduza o tipo do documento (PASSAPORTE ou BI/CC):");
         String documentType = getTreatedInput();
 
@@ -106,7 +106,7 @@ public class Bank {
         return false;
     }
 
-    private Date validateDate(){
+    private Date validateDate() {
         System.out.println("Introduza a data de nascimento - yyyy/mm/dd");
         String birthday = getTreatedInput();
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
@@ -118,7 +118,7 @@ public class Bank {
         }
     }
 
-    private PhoneContact validateContact(){
+    private PhoneContact validateContact() {
         System.out.println("Introduza o numero de telefone");
         String phoneString = getTreatedInput();
         try{
@@ -132,7 +132,7 @@ public class Bank {
         }
     }
 
-    private void editClient(Client client){
+    private void editClient(Client client) {
         System.out.println("\nDigite");
         System.out.println("1 - Para editar o nome do cliente");
         System.out.println("2 - Para editar a morada");
@@ -166,7 +166,7 @@ public class Bank {
 
     }
 
-    private void changeClientRecord(){
+    private void changeClientRecord() {
         IdDocument document = askDocument();
 
         if (clientExist(document)){
@@ -176,7 +176,7 @@ public class Bank {
         }
     }
 
-    private void accountRecord(){
+    private void accountRecord() {
         IdDocument document = askDocument();
 
         if (!clientExist(document)){
@@ -214,7 +214,7 @@ public class Bank {
         }
     }
 
-    private void newOperation(Account account){
+    private void newOperation(Account account) {
         String type = askOperationType();
 
         System.out.println("Qual o valor da operação?");
@@ -224,7 +224,7 @@ public class Bank {
         validateOperation(operation, account);
     }
 
-    private Client getBankClient(IdDocument document){
+    private Client getBankClient(IdDocument document) {
         Client thisClient = clients.get(0);
         for (Client client: clients){
             if (client.equals(document)){
@@ -235,7 +235,7 @@ public class Bank {
         return thisClient;
     }
 
-    private int validateInt(String integer){
+    private int validateInt(String integer) {
         try{
             return Integer.parseInt(integer);
         } catch (Exception e) {
@@ -244,7 +244,7 @@ public class Bank {
         }
     }
 
-    private String askOperationType(){
+    private String askOperationType() {
         try{
             System.out.println("Qual é o tipo de operação a ser realizada? (DÉBITO ou CRÉDITO)");
             String operationType = getTreatedInput();
@@ -263,7 +263,7 @@ public class Bank {
 
     }
 
-    private void validateOperation(Operation operation, Account account){
+    private void validateOperation(Operation operation, Account account) {
         if (account.getOverdraft() || operation.getType().equals("CRÉDITO") || account.getBalance() >= -operation.getAmount()){
             account.registerOperation(operation);
             System.out.println("Operação efetuada com sucesso!");
@@ -272,7 +272,7 @@ public class Bank {
         }
     }
 
-    private void setNewDependents(Account account){
+    private void setNewDependents(Account account) {
         IdDocument document = askDocument();
         if (!clientExist(document)) {
             System.out.println("Cliente não cadastrado, é necessário primeiro criar o cliente.");
@@ -309,7 +309,7 @@ public class Bank {
         }
     }
 
-    private boolean askOverdraft(){
+    private boolean askOverdraft() {
         System.out.println("Deseja habilitar a conta à operações à descoberto? (S/N)");
 
         switch (getTreatedInput()){
@@ -330,7 +330,7 @@ public class Bank {
         return scan.nextLine().strip().toUpperCase();
     }
 
-    public void manageAccount(){
+    public void manageAccount() {
         IdDocument document = askDocument();
         if (!clientExist(document)){
             System.out.println("Cliente não cadastrado, é necessário primeiro criar o cliente.");
@@ -349,7 +349,7 @@ public class Bank {
         }
     }
 
-    public void accountMenu(Account account){
+    public void accountMenu(Account account) {
         System.out.println("\nDigite:");
         System.out.println("SC - Para consulta de saldo");
         System.out.println("M  - Para adicionar um movimento");
@@ -380,7 +380,7 @@ public class Bank {
         }
     }
 
-    private void editAccount(Account account){
+    private void editAccount(Account account) {
         System.out.println("\nDigite:");
         System.out.println("O - Para modificar o overdraft");
         System.out.println("D - Para editar os dependentes da conta");

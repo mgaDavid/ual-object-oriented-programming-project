@@ -15,7 +15,7 @@ public class Operation {
     private final String type;
     private final double tax;
 
-    public Operation(String type, double amount, double tax){
+    public Operation(String type, double amount, double tax) {
         if (type.equals("DÉBITO")) this.amount = -abs(amount);
         else this.amount = abs(amount);
         this.date = LocalDateTime.now();
@@ -40,7 +40,7 @@ public class Operation {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         DateTimeFormatter newFormat = DateTimeFormatter
                 .ofPattern("uuuu/MM/dd HH:mm:ss")
                 .withResolverStyle(ResolverStyle.STRICT);
