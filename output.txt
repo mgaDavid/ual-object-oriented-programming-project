@@ -1,0 +1,466 @@
+C:\Users\Bruno\.jdks\openjdk-15.0.1\bin\java.exe "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.3\lib\idea_rt.jar=52825:C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.3\bin" -Dfile.encoding=UTF-8 -classpath C:\Users\Bruno\IdeaProjects\UAL_POO_PL_G4_David\out\production\lab_2;C:\Users\Bruno\.m2\repository\org\junit\jupiter\junit-jupiter\5.4.2\junit-jupiter-5.4.2.jar;C:\Users\Bruno\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.4.2\junit-jupiter-api-5.4.2.jar;C:\Users\Bruno\.m2\repository\org\apiguardian\apiguardian-api\1.0.0\apiguardian-api-1.0.0.jar;C:\Users\Bruno\.m2\repository\org\opentest4j\opentest4j\1.1.1\opentest4j-1.1.1.jar;C:\Users\Bruno\.m2\repository\org\junit\platform\junit-platform-commons\1.4.2\junit-platform-commons-1.4.2.jar;C:\Users\Bruno\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.4.2\junit-jupiter-params-5.4.2.jar;C:\Users\Bruno\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.4.2\junit-jupiter-engine-5.4.2.jar;C:\Users\Bruno\.m2\repository\org\junit\platform\junit-platform-engine\1.4.2\junit-platform-engine-1.4.2.jar com.poo.Main
+
+Digite:
+RC - para registo de cliente
+AC - para alteração de dados de cliente
+NC - para registo de conta
+EC - para editar e consultar dados de conta
+CD - para consultar dados de um cliente
+S  - Sair
+rc
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+BI
+Introduza o número do documento:
+123456789
+Introduza o nome do cliente
+Bruno T
+Introduza a data de nascimento - yyyy/mm/dd
+2000/01/01
+Introduza a morada
+Rua da Ual
+Introduza o email
+Bruno@ual.pt
+Introduza o numero de telefone
+961111111
+Introduza o tipo contacto
+Telemóvel
+Cliente registado com sucesso!
+
+Digite:
+RC - para registo de cliente
+AC - para alteração de dados de cliente
+NC - para registo de conta
+EC - para editar e consultar dados de conta
+CD - para consultar dados de um cliente
+S  - Sair
+AC
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+bi
+Introduza o número do documento:
+123456789
+
+Digite
+1 - Para editar o nome do cliente
+2 - Para editar a morada
+3 - Para editar o email
+4 - Para editar o contacto
+5 - Para retornar ao menu anterior
+1
+Introduza o novo nome
+Bruno M
+
+Digite
+1 - Para editar o nome do cliente
+2 - Para editar a morada
+3 - Para editar o email
+4 - Para editar o contacto
+5 - Para retornar ao menu anterior
+2
+Introduza a nova morada
+Rua da rual Ual
+
+Digite
+1 - Para editar o nome do cliente
+2 - Para editar a morada
+3 - Para editar o email
+4 - Para editar o contacto
+5 - Para retornar ao menu anterior
+3
+Introduza o novo email
+BrunoM@ual.com
+
+Digite
+1 - Para editar o nome do cliente
+2 - Para editar a morada
+3 - Para editar o email
+4 - Para editar o contacto
+5 - Para retornar ao menu anterior
+4
+Introduza o numero de telefone
+931111111
+Introduza o tipo contacto
+Casa
+
+Digite
+1 - Para editar o nome do cliente
+2 - Para editar a morada
+3 - Para editar o email
+4 - Para editar o contacto
+5 - Para retornar ao menu anterior
+5
+
+Digite:
+RC - para registo de cliente
+AC - para alteração de dados de cliente
+NC - para registo de conta
+EC - para editar e consultar dados de conta
+CD - para consultar dados de um cliente
+S  - Sair
+cd
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+bi
+Introduza o número do documento:
+123456789
+Nome: BRUNO M
+Morada: RUA DA RUAL UAL
+Tipo de contato: CASA
+Número do contato: 931111111
+E-mail: BRUNOM@UAL.COM
+Data de nascimento: 2000/01/01
+
+Digite:
+RC - para registo de cliente
+AC - para alteração de dados de cliente
+NC - para registo de conta
+EC - para editar e consultar dados de conta
+CD - para consultar dados de um cliente
+S  - Sair
+nc
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+BI
+Introduza o número do documento:
+123456789
+Qual o valor do depósito inicial?
+2000
+Deseja habilitar a conta à operações à descoberto? (S/N)
+N
+Caso queira inserir dependentes à conta, deverá fazê-lo através do menu de edição de contas.
+Conta número 1 criada com sucesso!
+
+Digite:
+RC - para registo de cliente
+AC - para alteração de dados de cliente
+NC - para registo de conta
+EC - para editar e consultar dados de conta
+CD - para consultar dados de um cliente
+S  - Sair
+ec
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+bi
+Introduza o número do documento:
+123456789
+Insira o número da conta:
+123456789
+Não foi encontrada conta com esse identificador nas contas deste cliente.
+
+Digite:
+RC - para registo de cliente
+AC - para alteração de dados de cliente
+NC - para registo de conta
+EC - para editar e consultar dados de conta
+CD - para consultar dados de um cliente
+S  - Sair
+ec
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+bi
+Introduza o número do documento:
+123456789
+Insira o número da conta:
+1
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+sc
+O saldo da conta é: 2000.0000
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+m
+Qual é o tipo de operação a ser realizada? (DÉBITO ou CRÉDITO)
+débito
+Qual o valor da operação?
+200
+Operação efetuada com sucesso!
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+m
+Qual é o tipo de operação a ser realizada? (DÉBITO ou CRÉDITO)
+crédito
+Qual o valor da operação?
+300.5
+Operação efetuada com sucesso!
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+lm
+Data: 2020/11/07 22:40:56 Tipo: CRÉDITO Taxa: 0.00 Valor: 2000.0000
+Data: 2020/11/07 22:42:17 Tipo: DÉBITO Taxa: 0.42 Valor: -200.0000
+Data: 2020/11/07 22:42:35 Tipo: CRÉDITO Taxa: 0.42 Valor: 300.5000
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+sc
+O saldo da conta é: 2099.6600
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+e
+
+Digite:
+O - Para modificar o overdraft
+D - Para editar os dependentes da conta
+V - Para retornar ao menu da conta
+d
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+bi
+Introduza o número do documento:
+987654321
+Cliente não cadastrado, é necessário primeiro criar o cliente.
+
+Digite:
+O - Para modificar o overdraft
+D - Para editar os dependentes da conta
+V - Para retornar ao menu da conta
+v
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+lm
+Data: 2020/11/07 22:40:56 Tipo: CRÉDITO Taxa: 0.00 Valor: 2000.0000
+Data: 2020/11/07 22:42:17 Tipo: DÉBITO Taxa: 0.42 Valor: -200.0000
+Data: 2020/11/07 22:42:35 Tipo: CRÉDITO Taxa: 0.42 Valor: 300.5000
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+sc
+O saldo da conta é: 2099.6600
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+m
+Qual é o tipo de operação a ser realizada? (DÉBITO ou CRÉDITO)
+débito
+Qual o valor da operação?
+2099.66
+Operação efetuada com sucesso!
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+sc
+O saldo da conta é: -0.4200
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+m
+Qual é o tipo de operação a ser realizada? (DÉBITO ou CRÉDITO)
+débito
+Qual o valor da operação?
+10
+Saldo insuficiente!
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+p
+
+Digite:
+RC - para registo de cliente
+AC - para alteração de dados de cliente
+NC - para registo de conta
+EC - para editar e consultar dados de conta
+CD - para consultar dados de um cliente
+S  - Sair
+rc
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+passaporte
+Introduza o número do documento:
+987654321
+Introduza o nome do cliente
+Diego
+Introduza a data de nascimento - yyyy/mm/dd
+2002/01/01
+Introduza a morada
+Rua da banana
+Introduza o email
+diego@ual.com
+Introduza o numero de telefone
+93000001
+Introduza o tipo contacto
+casa
+Cliente registado com sucesso!
+
+Digite:
+RC - para registo de cliente
+AC - para alteração de dados de cliente
+NC - para registo de conta
+EC - para editar e consultar dados de conta
+CD - para consultar dados de um cliente
+S  - Sair
+cd
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+bi
+Introduza o número do documento:
+987654321
+Cliente não cadastrado na nossa base de dados.
+
+Digite:
+RC - para registo de cliente
+AC - para alteração de dados de cliente
+NC - para registo de conta
+EC - para editar e consultar dados de conta
+CD - para consultar dados de um cliente
+S  - Sair
+cd
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+passaporte
+Introduza o número do documento:
+987654321
+Nome: DIEGO
+Morada: RUA DA BANANA
+Tipo de contato: CASA
+Número do contato: 93000001
+E-mail: DIEGO@UAL.COM
+Data de nascimento: 2002/01/01
+
+Digite:
+RC - para registo de cliente
+AC - para alteração de dados de cliente
+NC - para registo de conta
+EC - para editar e consultar dados de conta
+CD - para consultar dados de um cliente
+S  - Sair
+ec
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+bi
+Introduza o número do documento:
+123456789
+Insira o número da conta:
+1
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+e
+
+Digite:
+O - Para modificar o overdraft
+D - Para editar os dependentes da conta
+V - Para retornar ao menu da conta
+d
+Introduza o tipo do documento (PASSAPORTE ou BI/CC):
+passaporte
+Introduza o número do documento:
+987654321
+Deseja excluir ou adicionar o dependente? (E/A)
+a
+Cliente adicionado às dependentes com sucesso!
+
+Digite:
+O - Para modificar o overdraft
+D - Para editar os dependentes da conta
+V - Para retornar ao menu da conta
+o
+Deseja habilitar a conta à operações à descoberto? (S/N)
+s
+
+Digite:
+O - Para modificar o overdraft
+D - Para editar os dependentes da conta
+V - Para retornar ao menu da conta
+v
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+m
+Qual é o tipo de operação a ser realizada? (DÉBITO ou CRÉDITO)
+débito
+Qual o valor da operação?
+10
+Operação efetuada com sucesso!
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+lm
+Data: 2020/11/07 22:40:56 Tipo: CRÉDITO Taxa: 0.00 Valor: 2000.0000
+Data: 2020/11/07 22:42:17 Tipo: DÉBITO Taxa: 0.42 Valor: -200.0000
+Data: 2020/11/07 22:42:35 Tipo: CRÉDITO Taxa: 0.42 Valor: 300.5000
+Data: 2020/11/07 22:43:53 Tipo: DÉBITO Taxa: 0.42 Valor: -2099.6600
+Data: 2020/11/07 22:46:58 Tipo: DÉBITO Taxa: 0.42 Valor: -10.0000
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+sc
+O saldo da conta é: -10.8400
+
+Digite:
+SC - Para consulta de saldo
+M  - Para adicionar um movimento
+LM - Para listar todos os movimentos
+E  - Para editar os dados da conta
+P  - Para retornar ao menu principal
+p
+
+Digite:
+RC - para registo de cliente
+AC - para alteração de dados de cliente
+NC - para registo de conta
+EC - para editar e consultar dados de conta
+CD - para consultar dados de um cliente
+S  - Sair
+s
+Encerrando..
+
+Process finished with exit code 0
