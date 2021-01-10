@@ -8,40 +8,27 @@ public class TransactionClass implements Serializable {
     protected final ClientClass client;
     protected final LocalClass local;
     protected final ArrayList<EmployeeClass> employees;
-    protected final ItemClass item;
-    protected final int quantity;
 
-    public TransactionClass(int id, ClientClass client, LocalClass local, ArrayList<EmployeeClass> employees,
-                            ItemClass item, int quantity) {
+    protected TransactionClass(int id, ClientClass client, LocalClass local, ArrayList<EmployeeClass> employees) {
         this.id = id;
         this.client = client;
         this.local = local;
         this.employees = employees;
-        this.item = item;
-        this.quantity = quantity;
     }
 
-    public int getId() {
-        return id;
+    protected int getId() {
+        return this.id;
     }
 
-    public ClientClass getClient() {
-        return client;
+    protected ClientClass getClient() {
+        return this.client;
     }
 
-    public LocalClass getLocal() {
-        return local;
+    protected LocalClass getLocal() {
+        return this.local;
     }
 
-    public ArrayList<EmployeeClass> getEmployees() {
-        return employees;
-    }
-
-    public ItemClass getItem() {
-        return item;
-    }
-
-    public int getQuantity() {
-        return quantity;
+    protected ArrayList<EmployeeClass> getEmployees() {
+        return this.employees;
     }
 }

@@ -1,9 +1,7 @@
 package views;
 
 
-import models.ClientClass;
-import models.EmployeeClass;
-import models.LocalClass;
+import models.*;
 
 import exceptions.*;
 
@@ -21,32 +19,29 @@ public class CLI {
     private ArrayList<LocalClass> locals = new ArrayList<LocalClass>();
 
     public CLI() {
-        while (!this.input.isEmpty()) {
-            switch (this.input.get(0)) {
-                case "RF" -> RF(this.input);
-                case "RC" -> RC(this.input);
-                case "RI" -> RI();
-                case "RD" -> RD();
-                case "RE" -> RE();
-                case "CC" -> CC();
-                case "CI" -> CI();
-                case "CE" -> CE();
-                case "CF" -> CF();
-                case "G" -> G();
-                case "L" -> L();
-                default -> this.invalidInstruction();
+        while (true) {
+            try {
+                switch (this.input.get(0)) {
+                    case "RF" -> RF(this.input);
+                    case "RC" -> RC(this.input);
+                    case "RI" -> RI(this.input);
+                    case "RL" -> RL(this.input);
+                    case "RD" -> RD(this.input);
+                    case "RE" -> RE(this.input);
+                    case "CC" -> CC(this.input);
+                    case "CI" -> CI(this.input);
+                    case "CE" -> CE(this.input);
+                    case "CF" -> CF(this.input);
+                    case "G" -> G(this.input);
+                    case "L" -> L(this.input);
+                    case "" -> System.exit(0);
+                    default -> throw new InvalidInstructionException();
+                }
+            } catch (InvalidInstructionException e) {
+                System.out.println(e.getMessage());
             }
             this.input = split(scan.nextLine(), " ");
         }
-        System.exit(0);
-    }
-
-    public ArrayList<String> getInput() {
-        return input;
-    }
-
-    private void invalidInstruction() {
-        System.out.println("Instrução inválida.");
     }
 
     public ArrayList<EmployeeClass> getEmployees() {
@@ -61,47 +56,37 @@ public class CLI {
         return locals;
     }
 
-    private boolean existEmployee(String name) {
-        for (EmployeeClass employee : this.getEmployees()) {
-            if (employee.getName().equals(name)){
-                return true;
+    private LocalClass getLocal(int id) throws LocalNotFoundException {
+        for (LocalClass local : this.getLocals()) {
+            if (local.getId() == id) {
+                return local;
             }
         }
-        return false;
+        throw new LocalNotFoundException();
     }
 
     private EmployeeClass getEmployee(int id) throws EmployeeNotFoundException {
         for (EmployeeClass employee : this.getEmployees()) {
-            if (employee.getId() == id){
+            if (employee.getId() == id) {
                 return employee;
             }
         }
-        throw new EmployeeNotFoundException("Funcionário inexistente.");
+        throw new EmployeeNotFoundException();
     }
 
-    private boolean existClient(String name) {
+    private ClientClass getClient(int id) throws ClientNotFoundException {
         for (ClientClass client : this.getClients()) {
-            if (client.getName().equals(name)){
-                return true;
+            if (client.getId() == id) {
+                return client;
             }
         }
-        return false;
+        throw new ClientNotFoundException();
     }
 
-    private boolean validateInputSize(ArrayList<String> input, int size) {
-        if (input.size() < size) {
-            invalidInstruction();
-            return false;
+    private void RF(ArrayList<String> input) throws InvalidInstructionException {
+        if (input.size() < 4) {
+            throw new InvalidInstructionException();
         }
-        return true;
-    }
-
-    private void RF(ArrayList<String> input) {
-        System.out.println("entrei");
-        if (validateInputSize(input, 4)) {
-            return;
-        }
-        System.out.println("aqui");
 
         try {
             String category = input.get(1);
@@ -118,9 +103,9 @@ public class CLI {
         }
     }
 
-    private void RC(ArrayList<String> input) {
-        if (validateInputSize(input, 3)) {
-            return;
+    private void RC(ArrayList<String> input) throws InvalidInstructionException {
+        if (input.size() < 3) {
+            throw new InvalidInstructionException();
         }
 
         try {
@@ -130,64 +115,160 @@ public class CLI {
 
             // Validating employee category
             if (!employee.getCategory().equals("Gestor")) {
-                System.out.println("Funcionário incorreto.");
-                return;
+                throw new NotAManagerException();
             }
 
             // Validating client
             String name = String.join(" ", input.subList(2, input.size()));
-            if (existClient(name)) {
-                System.out.println("Cliente existente.");
-                return;
-            }
-
-            ClientClass newClient = new ClientClass(name);
+            ClientClass newClient = new ClientClass(name, this.getClients());
             this.clients.add(newClient);
 
             System.out.printf("Cliente registado com o identificador %d.%n", newClient.getId());
 
-        } catch (NumberFormatException | EmployeeNotFoundException e) {
+        } catch (EmployeeNotFoundException | NotAManagerException | ExistingClientException e) {
+            System.out.println(e.getMessage());
+        } catch (NumberFormatException e) {
+            throw new InvalidInstructionException();
+        }
+    }
+
+    private void RI(ArrayList<String> input) throws InvalidInstructionException {
+        if (input.size() != 3) {
+            throw new InvalidInstructionException();
+        }
+
+        try {
+            int clientId = Integer.parseInt(input.get(1));
+            String newItemName = input.get(2);
+            //String newItemName = String.join(" ", input.subList(2, input.size()));
+            ArrayList<String> permissions = split(scan.nextLine(), ",");
+
+            ClientClass client = this.getClient(clientId);
+
+            if (permissions.size() == 1 && permissions.get(0).equals("")) {
+                permissions.set(0, "N");
+            }
+
+            client.addItem(newItemName, permissions);
+
+            ItemClass newItem = client.getItems().get(client.getItems().size() - 1);
+            System.out.printf("Item registado para o cliente %d com o identificador %d.%n", client.getId(),
+                    newItem.getId());
+        } catch (NumberFormatException e) {
+            throw new InvalidInstructionException();
+        } catch (ClientNotFoundException | NonexistentPermissionException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void RI() {
-        int clienteId = 1;
-        int itemId = 2;
-        System.out.printf("Item registado para o cliente %d com o identificador %d.%n", clienteId, itemId);
+    private void RL(ArrayList<String> input) throws InvalidInstructionException {
+        if (input.size() < 2) {
+            throw new InvalidInstructionException();
+        }
+
+        String newLocalName = String.join(" ", input.subList(1, input.size()));
+
+        try {
+            for (LocalClass local : this.getLocals()) {
+                if (local.getName().equals(newLocalName)) {
+                    throw new ExistingLocalException();
+                }
+            }
+
+            LocalClass newLocal = new LocalClass(newLocalName);
+            this.locals.add(newLocal);
+
+            System.out.printf("Local registado com o identificador %d.%n", newLocal.getId());
+        } catch (ExistingLocalException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
-    private void RD() {
+    private void RD(ArrayList<String> input) throws InvalidInstructionException {
+        if (input.size() != 3) {
+            throw new InvalidInstructionException();
+        }
+
+        try {
+            int clientId = Integer.parseInt(input.get(1));
+            int localId = Integer.parseInt(input.get(2));
+
+            ArrayList<String> employeesIds = split(scan.nextLine(), " ");
+            ArrayList<String> itemQuantityPairsStrings = new ArrayList<>();
+
+            while (true) {
+                String itemQuantityPairString = scan.nextLine();
+                if (itemQuantityPairString.equals("")) {
+                    break;
+                }
+
+                if (split(itemQuantityPairString, " ").size() != 2) {
+                    throw new InvalidInstructionException();
+                }
+                itemQuantityPairsStrings.add(itemQuantityPairString);
+            }
+
+            ClientClass client = this.getClient(clientId);
+            LocalClass local = this.getLocal(localId);
+
+            ArrayList<DepositingItemClass> depositingItems = new ArrayList<>();
+            for (String itemQuantityPairString : itemQuantityPairsStrings) {
+                ArrayList<String> itemQuantityPair = split(itemQuantityPairString, " ");
+                int itemId = Integer.parseInt(itemQuantityPair.get(0));
+                int movingQuantity = Integer.parseInt(itemQuantityPair.get(1));
+                depositingItems.add(new DepositingItemClass(client.getItem(itemId), movingQuantity));
+            }
+
+            ArrayList<EmployeeClass> employees = new ArrayList<>();
+            for (String employeeIdAsString : employeesIds) {
+                int employeeId = Integer.parseInt(employeeIdAsString);
+                employees.add(this.getEmployee(employeeId));
+            }
+
+            for (EmployeeClass employee : employees) {
+                for (DepositingItemClass depositingItem : depositingItems) {
+                    System.out.println("BANANA");
+                }
+            }
+
+        } catch (NumberFormatException e) {
+            throw new InvalidInstructionException();
+        } catch (ClientNotFoundException | LocalNotFoundException | EmployeeNotFoundException | ItemNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+
         int id = 1;
         System.out.printf("Depósito registado com o identificador %d.%n", id);
     }
 
-    private void RE() {
+    private void RE(ArrayList<String> input) {
         int id = 1;
         System.out.printf("Entrega registada com o identificador %d.%n", id);
     }
 
-    private void CC() {
+    private void CC(ArrayList<String> input) {
         ;
     }
 
-    private void CI() {
+    private void CI(ArrayList<String> input) {
         ;
     }
 
-    private void CE() {
+    private void CE(ArrayList<String> input) {
         ;
     }
 
-    private void CF() {
+    private void CF(ArrayList<String> input) {
         ;
     }
 
-    private void G() {
+    private void G(ArrayList<String> input) {
         ;
     }
 
-    private void L() {
+    private void L(ArrayList<String> input) {
         ;
     }
 

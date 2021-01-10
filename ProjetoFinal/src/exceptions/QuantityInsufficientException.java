@@ -1,6 +1,6 @@
 package exceptions;
 
-class QuantityInsufficientException extends Exception {
+public class QuantityInsufficientException extends Exception {
 
     public QuantityInsufficientException() { super("Quantidade Insuficiente."); }
 

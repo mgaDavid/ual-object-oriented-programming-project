@@ -3,8 +3,15 @@ package models;
 import java.util.ArrayList;
 
 public class DeliveryClass extends TransactionClass {
+    public final ArrayList<DeliveringItemClass> items;
+
     public DeliveryClass(int id, ClientClass client, LocalClass local, ArrayList<EmployeeClass> employees,
-                         ItemClass item, int quantity) {
-        super(id, client, local, employees, item, quantity);
+                         ArrayList<DeliveringItemClass> items) {
+        super(id, client, local, employees);
+        this.items = items;
+    }
+
+    public ArrayList<DeliveringItemClass> getItems() {
+        return items;
     }
 }

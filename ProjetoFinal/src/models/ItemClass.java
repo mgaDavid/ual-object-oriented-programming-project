@@ -1,5 +1,7 @@
 package models;
 
+
+import exceptions.NonexistentPermissionException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -10,11 +12,18 @@ public class ItemClass implements Serializable {
     private final ArrayList<String> permissions;
     private int quantity;
 
-    public ItemClass(int id, String name, ClientClass client, ArrayList<String> permissions) {
-        this.id = id;
+    public ItemClass(String name, ClientClass client, ArrayList<String> permissions)
+            throws NonexistentPermissionException {
+
+        for (String permission : permissions) {
+            if (!EmployeeClass.existPermission(permission)) {
+                throw new NonexistentPermissionException();
+            }
+        }
+        this.permissions = permissions;
         this.name = name;
         this.client = client;
-        this.permissions = permissions;
+        this.id = client.addOneItem();
     }
 
     public int getId() {
@@ -39,5 +48,9 @@ public class ItemClass implements Serializable {
 
     public void remove(int quantity) {
         this.quantity = this.quantity - quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }
