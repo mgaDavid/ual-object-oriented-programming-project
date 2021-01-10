@@ -1,19 +1,28 @@
 package models;
 
+import exceptions.*;
+
 import java.util.ArrayList;
 
 public class ClientClass extends PersonClass {
     private static int classCounter;
     private final int id;
     private int lastItem;
-    private ArrayList<ItemClass> items;
+    private ArrayList<ItemClass> items = new ArrayList<>();
     private int lastDeposit;
-    private ArrayList<DepositClass> deposits;
+    private ArrayList<DepositClass> deposits = new ArrayList<>();
     private int lastDelivery;
-    private ArrayList<DeliveryClass> deliveries;
+    private ArrayList<DeliveryClass> deliveries = new ArrayList<>();
 
-    public ClientClass(String name) {
+    public ClientClass(String name, ArrayList<ClientClass> existingClients) throws ExistingClientException {
         super(name);
+
+        for (ClientClass client : existingClients) {
+            if (client.getName().equals(name)) {
+                throw new ExistingClientException();
+            }
+        }
+
         this.id = ++ClientClass.classCounter;
     }
 
@@ -25,34 +34,48 @@ public class ClientClass extends PersonClass {
         return ClientClass.classCounter;
     }
 
+    public ArrayList<ItemClass> getItems() {
+        return items;
+    }
+
     public int getLastItem() {
         return lastItem;
     }
 
-    private int AddOneItem() {
+    public int addOneItem() {
         return ++this.lastItem;
     }
 
-    public void addItem(String itemName, ArrayList<String> permissions) {
-        items.add(new ItemClass(this.AddOneItem(), itemName, this, permissions));
+    public void addItem(String itemName, ArrayList<String> permissions) throws NonexistentPermissionException {
+        this.items.add(new ItemClass(itemName, this, permissions));
     }
 
-    private int AddOneDeposit() {
+    private int addOneDeposit() {
         return ++this.lastDeposit;
     }
 
-    public void addDeposit(int depositId, LocalClass local, ArrayList<EmployeeClass> employees, ItemClass item,
+    public void addDeposit(int depositId, LocalClass local, ArrayList<EmployeeClass> employees, ArrayList<DepositingItemClass> items,
                            int quantity) {
 
-        deposits.add(new DepositClass(this.AddOneDeposit(), this, local, employees, item, quantity));
+        this.deposits.add(new DepositClass(this.addOneDeposit(), this, local, employees, items));
     }
 
-    private int AddOneDelivery() {
+    private int addOneDelivery() {
         return ++this.lastDelivery;
     }
 
-    public void addDelivery(int deliveryId, LocalClass local, ArrayList<EmployeeClass> employees, ItemClass item,
+    public void addDelivery(int deliveryId, LocalClass local, ArrayList<EmployeeClass> employees, ArrayList<DeliveringItemClass> items,
                             int quantity) {
-        deliveries.add(new DeliveryClass(this.AddOneDelivery(), this, local, employees, item, quantity));
+        this.deliveries.add(new DeliveryClass(this.addOneDelivery(), this, local, employees, items));
+    }
+    
+    public ItemClass getItem(int id) throws ItemNotFoundException {
+        for (ItemClass item : this.getItems()) {
+            if (item.getId() == id) {
+                return item;
+            }
+        }
+
+        throw new ItemNotFoundException();
     }
 }
