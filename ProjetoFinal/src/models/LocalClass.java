@@ -16,7 +16,7 @@ public class LocalClass implements Serializable {
         return classCounter;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
