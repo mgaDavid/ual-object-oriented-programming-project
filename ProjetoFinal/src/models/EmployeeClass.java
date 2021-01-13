@@ -41,6 +41,8 @@ public class EmployeeClass extends PersonClass {
         return this.id;
     }
 
+    public String getName() { return this.name; }
+
     public String getCategory() {
         return this.category;
     }

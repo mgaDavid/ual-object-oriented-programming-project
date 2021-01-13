@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class ClientClass extends PersonClass {
     private static int classCounter;
     private final int id;
+    private final int employeeId;
     private int lastItem;
     private ArrayList<ItemClass> items = new ArrayList<>();
     private int lastDeposit;
@@ -14,7 +15,7 @@ public class ClientClass extends PersonClass {
     private int lastDelivery;
     private ArrayList<DeliveryClass> deliveries = new ArrayList<>();
 
-    public ClientClass(String name, ArrayList<ClientClass> existingClients) throws ExistingClientException {
+    public ClientClass(String name, int employeeId, ArrayList<ClientClass> existingClients) throws ExistingClientException {
         super(name);
 
         for (ClientClass client : existingClients) {
@@ -22,12 +23,16 @@ public class ClientClass extends PersonClass {
                 throw new ExistingClientException();
             }
         }
-
+        this.employeeId = employeeId;
         this.id = ++ClientClass.classCounter;
     }
 
     public int getId() {
         return this.id;
+    }
+
+    public int getEmployeeId() {
+        return this.employeeId;
     }
 
     public static int getClassCounter() {
