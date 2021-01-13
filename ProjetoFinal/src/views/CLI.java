@@ -120,7 +120,7 @@ public class CLI {
 
             // Validating client
             String name = String.join(" ", input.subList(2, input.size()));
-            ClientClass newClient = new ClientClass(name, this.getClients());
+            ClientClass newClient = new ClientClass(name, employeeId ,this.getClients());
             this.clients.add(newClient);
 
             System.out.printf("Cliente registado com o identificador %d.%n", newClient.getId());
@@ -139,8 +139,8 @@ public class CLI {
 
         try {
             int clientId = Integer.parseInt(input.get(1));
-            String newItemName = input.get(2);
-            //String newItemName = String.join(" ", input.subList(2, input.size()));
+            //String newItemName = input.get(2);
+            String newItemName = String.join(" ", input.subList(2, input.size()));
             ArrayList<String> permissions = split(scan.nextLine(), ",");
 
             ClientClass client = this.getClient(clientId);
@@ -248,8 +248,25 @@ public class CLI {
         System.out.printf("Entrega registada com o identificador %d.%n", id);
     }
 
-    private void CC(ArrayList<String> input) {
-        ;
+    private void CC(ArrayList<String> input) throws InvalidInstructionException {
+        if (input.size() < 2) {
+            throw new InvalidInstructionException();
+        }
+
+        try {
+            int clientId = Integer.parseInt(input.get(1));
+            ClientClass client = this.getClient(clientId);
+            int employeeId = client.getEmployeeId();
+            EmployeeClass employee = this.getEmployee(employeeId);
+
+
+            System.out.println(client.getName());
+            System.out.println(employee.getName());
+
+
+        }catch (ClientNotFoundException | EmployeeNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void CI(ArrayList<String> input) {
@@ -260,8 +277,21 @@ public class CLI {
         ;
     }
 
-    private void CF(ArrayList<String> input) {
-        ;
+    private void CF(ArrayList<String> input)  throws InvalidInstructionException {
+        if (input.size() < 2) {
+            throw new InvalidInstructionException();
+        }
+        try {
+            int employeeId = Integer.parseInt(input.get(1));
+            EmployeeClass employee = this.getEmployee(employeeId);
+
+            System.out.println(employee.getName());
+            System.out.println(employee.getPermission());
+
+
+        }catch (EmployeeNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void G(ArrayList<String> input) {
