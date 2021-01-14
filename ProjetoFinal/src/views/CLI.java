@@ -111,16 +111,17 @@ public class CLI {
         try {
             // Validating employee
             int employeeId = Integer.parseInt(input.get(1));
+            String name = String.join(" ", input.subList(2, input.size()));
+
             EmployeeClass employee = this.getEmployee(employeeId);
 
-            // Validating employee category
+            // Validating if the employee is a manager
             if (!employee.getCategory().equals("Gestor")) {
                 throw new NotAManagerException();
             }
 
             // Validating client
-            String name = String.join(" ", input.subList(2, input.size()));
-            ClientClass newClient = new ClientClass(name, employeeId ,this.getClients());
+            ClientClass newClient = new ClientClass(name, employee, this.getClients());
             this.clients.add(newClient);
 
             System.out.printf("Cliente registado com o identificador %d.%n", newClient.getId());
@@ -209,38 +210,68 @@ public class CLI {
                 itemQuantityPairsStrings.add(itemQuantityPairString);
             }
 
+
             ClientClass client = this.getClient(clientId);
             LocalClass local = this.getLocal(localId);
 
-            ArrayList<DepositingItemClass> depositingItems = new ArrayList<>();
-            for (String itemQuantityPairString : itemQuantityPairsStrings) {
+            //ArrayList<DepositingItemClass> depositingItems = new ArrayList<>();
+            final var depositingItems = new ArrayList<DepositingItemClass>();
+
+            for (final var itemQuantityPairString : itemQuantityPairsStrings) {
                 ArrayList<String> itemQuantityPair = split(itemQuantityPairString, " ");
                 int itemId = Integer.parseInt(itemQuantityPair.get(0));
                 int movingQuantity = Integer.parseInt(itemQuantityPair.get(1));
                 depositingItems.add(new DepositingItemClass(client.getItem(itemId), movingQuantity));
             }
 
+            EmployeeClass driver;
+            int drivers = 0;
             ArrayList<EmployeeClass> employees = new ArrayList<>();
+
             for (String employeeIdAsString : employeesIds) {
                 int employeeId = Integer.parseInt(employeeIdAsString);
-                employees.add(this.getEmployee(employeeId));
-            }
-
-            for (EmployeeClass employee : employees) {
-                for (DepositingItemClass depositingItem : depositingItems) {
-                    System.out.println("BANANA");
+                EmployeeClass employee = this.getEmployee(employeeId);
+                if (employee.getCategory().equals("Condutor")) {
+                    ++drivers;
+                    if (drivers > 1) { throw new InvalidInstructionException();}
+                    driver = employee;
+                } else if (employee.getCategory().equals("Gestor")) {
+                    throw new InvalidInstructionException();
+                } else {
+                    employees.add(employee);
                 }
             }
 
+            if (employees.size() == 0 || drivers == 0) {
+                throw new InvalidInstructionException();
+            }
+
+            for (DepositingItemClass depositingItem : depositingItems) {
+                ArrayList<String> itemPermissions = depositingItem.getItem().getPermissions();
+                if (itemPermissions.contains("P")) {
+                    if (!driver.getCategory().equals("P")) {
+                        throw new DriverWithoutPermissionException();
+                    }
+                }
+
+                if (itemPermissions.contains("S")) {
+                    for (EmployeeClass employee : employees) {
+                        if (!employee.getCategory().equals("S")) {
+                            throw new LoaderWithoutPermissionException();
+                        }
+                    }
+                }
+            }
+            employees.add(driver);
+            client.addDeposit(local, employees, depositingItems);
+            System.out.printf("Depósito registado com o identificador %d.%n", client.getLastDeposit().getId());
+
         } catch (NumberFormatException e) {
             throw new InvalidInstructionException();
-        } catch (ClientNotFoundException | LocalNotFoundException | EmployeeNotFoundException | ItemNotFoundException e) {
+        } catch (ClientNotFoundException | LocalNotFoundException | EmployeeNotFoundException | ItemNotFoundException |
+                DriverWithoutPermissionException | LoaderWithoutPermissionException e) {
             System.out.println(e.getMessage());
         }
-
-
-        int id = 1;
-        System.out.printf("Depósito registado com o identificador %d.%n", id);
     }
 
     private void RE(ArrayList<String> input) {
@@ -256,15 +287,14 @@ public class CLI {
         try {
             int clientId = Integer.parseInt(input.get(1));
             ClientClass client = this.getClient(clientId);
-            int employeeId = client.getEmployeeId();
-            EmployeeClass employee = this.getEmployee(employeeId);
+            EmployeeClass employee = client.getManager();
 
 
             System.out.println(client.getName());
             System.out.println(employee.getName());
 
 
-        }catch (ClientNotFoundException | EmployeeNotFoundException e) {
+        }catch (ClientNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }

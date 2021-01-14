@@ -4,18 +4,20 @@ import exceptions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class EmployeeClass extends PersonClass {
-    private static int classCounter;
-    private final static ArrayList<String> permissions = new ArrayList<>(Arrays.asList("N", "S", "P"));
-    private final static ArrayList<String> categories = new ArrayList<>(
+    private static int classCounter = 0;
+    private final static List<String> permissions = new ArrayList<>(Arrays.asList("N", "S", "P"));
+    private final static List<String> categories = new ArrayList<>(
             Arrays.asList("Carregador", "Condutor", "Gestor"));
     private final int id;
     private final String category;
     private final String permission;
 
     public EmployeeClass(String name, String category, String permission, ArrayList<EmployeeClass> existingEmployees)
-            throws NonexistentCategoryException, ExistingEmployeeException, NonexistentPermissionException {
+            throws NonexistentCategoryException, ExistingEmployeeException, NonexistentPermissionException,
+            InvalidInstructionException {
         super(name);
 
         if (!existCategory(category)) {
@@ -23,6 +25,13 @@ public class EmployeeClass extends PersonClass {
         }
 
         if (!existPermission(permission)) {
+            throw new InvalidInstructionException();
+        }
+
+        if ((category.equals("Condutor") && permission.equals("S")) ||
+            (category.equals("Carregador") && permission.equals("P")) ||
+            (category.equals("Gestor") && !permission.equals("N"))
+        ) {
             throw new NonexistentPermissionException();
         }
 
@@ -55,11 +64,11 @@ public class EmployeeClass extends PersonClass {
         return EmployeeClass.classCounter;
     }
 
-    public static ArrayList<String> getPermissions() {
+    public static List<String> getPermissions() {
         return permissions;
     }
 
-    public static ArrayList<String> getCategories() {
+    public static List<String> getCategories() {
         return categories;
     }
 

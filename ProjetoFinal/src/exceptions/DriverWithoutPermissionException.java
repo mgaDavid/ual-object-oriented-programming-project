@@ -1,7 +1,7 @@
 package exceptions;
 
 
-class DriverWithoutPermissionException extends Exception {
+public class DriverWithoutPermissionException extends Exception {
 
     public DriverWithoutPermissionException() { super("Condutor sem permissões."); }
 
