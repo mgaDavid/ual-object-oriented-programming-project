@@ -10,4 +10,12 @@ public class DepositingItemClass {
         this.item = item;
         this.quantity = quantity;
     }
+
+    public ItemClass getItem() {
+        return item;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }

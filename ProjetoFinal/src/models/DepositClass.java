@@ -1,17 +1,23 @@
 package models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DepositClass extends TransactionClass {
-    public final ArrayList<DepositingItemClass> items;
+    private final List<DepositingItemClass> items;
+    private final int id;
 
-    public DepositClass(int id, ClientClass client, LocalClass local, ArrayList<EmployeeClass> employees,
-                        ArrayList<DepositingItemClass> items) {
-        super(id, client, local, employees);
+    public DepositClass(ClientClass client, LocalClass local, List<EmployeeClass> employees,
+                        List<DepositingItemClass> items) {
+        super(client, local, employees);
         this.items = items;
+        this.id = client.addOneDeposit();
     }
 
-    public ArrayList<DepositingItemClass> getItems() {
+    public List<DepositingItemClass> getItems() {
         return items;
+    }
+
+    public int getId() {
+        return id;
     }
 }
