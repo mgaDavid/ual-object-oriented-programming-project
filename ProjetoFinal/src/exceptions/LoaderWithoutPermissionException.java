@@ -1,6 +1,6 @@
 package exceptions;
 
-class LoaderWithoutPermissionException extends Exception {
+public class LoaderWithoutPermissionException extends Exception {
 
     public LoaderWithoutPermissionException() { super("Carregador sem permissões."); }
 

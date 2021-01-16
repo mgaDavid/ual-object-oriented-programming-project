@@ -1,17 +1,24 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DeliveryClass extends TransactionClass {
-    public final ArrayList<DeliveringItemClass> items;
+    private final List<DeliveringItemClass> items;
+    private final int id;
 
-    public DeliveryClass(int id, ClientClass client, LocalClass local, ArrayList<EmployeeClass> employees,
-                         ArrayList<DeliveringItemClass> items) {
-        super(id, client, local, employees);
+    public DeliveryClass(ClientClass client, LocalClass local, List<EmployeeClass> employees,
+                         List<DeliveringItemClass> items) {
+        super(client, local, employees);
         this.items = items;
+        this.id = getClient().addOneDelivery();
     }
 
-    public ArrayList<DeliveringItemClass> getItems() {
+    public List<DeliveringItemClass> getItems() {
         return items;
+    }
+
+    public int getId() {
+        return id;
     }
 }

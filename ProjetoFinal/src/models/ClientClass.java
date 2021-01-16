@@ -3,19 +3,20 @@ package models;
 import exceptions.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ClientClass extends PersonClass {
     private static int classCounter;
     private final int id;
-    private final int employeeId;
+    public final EmployeeClass manager;
     private int lastItem;
-    private ArrayList<ItemClass> items = new ArrayList<>();
+    private List<ItemClass> items = new ArrayList<>();
     private int lastDeposit;
-    private ArrayList<DepositClass> deposits = new ArrayList<>();
+    private List<DepositClass> deposits = new ArrayList<>();
     private int lastDelivery;
-    private ArrayList<DeliveryClass> deliveries = new ArrayList<>();
+    private List<DeliveryClass> deliveries = new ArrayList<>();
 
-    public ClientClass(String name, int employeeId, ArrayList<ClientClass> existingClients) throws ExistingClientException {
+    public ClientClass(String name, EmployeeClass manager, List<ClientClass> existingClients) throws ExistingClientException {
         super(name);
 
         for (ClientClass client : existingClients) {
@@ -23,7 +24,7 @@ public class ClientClass extends PersonClass {
                 throw new ExistingClientException();
             }
         }
-        this.employeeId = employeeId;
+        this.manager = manager;
         this.id = ++ClientClass.classCounter;
     }
 
@@ -31,15 +32,15 @@ public class ClientClass extends PersonClass {
         return this.id;
     }
 
-    public int getEmployeeId() {
-        return this.employeeId;
+    public EmployeeClass getManager() {
+        return this.manager;
     }
 
     public static int getClassCounter() {
         return ClientClass.classCounter;
     }
 
-    public ArrayList<ItemClass> getItems() {
+    public List<ItemClass> getItems() {
         return items;
     }
 
@@ -51,27 +52,25 @@ public class ClientClass extends PersonClass {
         return ++this.lastItem;
     }
 
-    public void addItem(String itemName, ArrayList<String> permissions) throws NonexistentPermissionException {
+    public void addItem(String itemName, List<String> permissions) throws NonexistentPermissionException {
         this.items.add(new ItemClass(itemName, this, permissions));
     }
 
-    private int addOneDeposit() {
+    public int addOneDeposit() {
         return ++this.lastDeposit;
     }
 
-    public void addDeposit(int depositId, LocalClass local, ArrayList<EmployeeClass> employees, ArrayList<DepositingItemClass> items,
-                           int quantity) {
+    public void addDeposit(LocalClass local, List<EmployeeClass> employees, List<DepositingItemClass> items) {
 
-        this.deposits.add(new DepositClass(this.addOneDeposit(), this, local, employees, items));
+        this.deposits.add(new DepositClass(this, local, employees, items));
     }
 
-    private int addOneDelivery() {
+    public int addOneDelivery() {
         return ++this.lastDelivery;
     }
 
-    public void addDelivery(int deliveryId, LocalClass local, ArrayList<EmployeeClass> employees, ArrayList<DeliveringItemClass> items,
-                            int quantity) {
-        this.deliveries.add(new DeliveryClass(this.addOneDelivery(), this, local, employees, items));
+    public void addDelivery(LocalClass local, List<EmployeeClass> employees, List<DeliveringItemClass> items) {
+        this.deliveries.add(new DeliveryClass(this, local, employees, items));
     }
     
     public ItemClass getItem(int id) throws ItemNotFoundException {
@@ -82,5 +81,14 @@ public class ClientClass extends PersonClass {
         }
 
         throw new ItemNotFoundException();
+    }
+
+    public DepositClass getLastDeposit() {
+        List<DepositClass> deposits = this.getDeposits();
+        return deposits.get(deposits.size() - 1);
+    }
+
+    public List<DepositClass> getDeposits() {
+        return this.deposits;
     }
 }

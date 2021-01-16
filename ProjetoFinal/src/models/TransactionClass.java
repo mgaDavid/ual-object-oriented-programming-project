@@ -1,23 +1,17 @@
 package models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionClass implements Serializable {
-    protected final int id;
     protected final ClientClass client;
     protected final LocalClass local;
-    protected final ArrayList<EmployeeClass> employees;
+    protected final List<EmployeeClass> employees;
 
-    protected TransactionClass(int id, ClientClass client, LocalClass local, ArrayList<EmployeeClass> employees) {
-        this.id = id;
+    protected TransactionClass(ClientClass client, LocalClass local, List<EmployeeClass> employees) {
         this.client = client;
         this.local = local;
         this.employees = employees;
-    }
-
-    protected int getId() {
-        return this.id;
     }
 
     protected ClientClass getClient() {
@@ -28,7 +22,7 @@ public class TransactionClass implements Serializable {
         return this.local;
     }
 
-    protected ArrayList<EmployeeClass> getEmployees() {
+    protected List<EmployeeClass> getEmployees() {
         return this.employees;
     }
 }
