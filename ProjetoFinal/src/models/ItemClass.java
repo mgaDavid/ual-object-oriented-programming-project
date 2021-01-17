@@ -1,30 +1,21 @@
 package models;
 
-
-import exceptions.NonexistentPermissionException;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ItemClass implements Serializable {
     private final int id;
     private final String name;
     private final ClientClass client;
-    private final ArrayList<String> permissions;
-    private int quantity;
+    private final List<PermissionClass> permissions;
+    private int quantity = 0;
 
-    public ItemClass(String name, ClientClass client, List<String> permissions)
-            throws NonexistentPermissionException {
-
-        for (String permission : permissions) {
-            if (!EmployeeClass.existPermission(permission)) {
-                throw new NonexistentPermissionException();
-            }
-        }
-        this.permissions = permissions;
+    public ItemClass(int id, String name, ClientClass client, List<PermissionClass> permissions) {
+        this.id = id;
         this.name = name;
         this.client = client;
-        this.id = client.addOneItem();
+        this.permissions = permissions;
     }
 
     public int getId() {
@@ -39,8 +30,12 @@ public class ItemClass implements Serializable {
         return this.client;
     }
 
-    public ArrayList<String> getPermissions() {
+    public List<PermissionClass> getPermissions() {
         return this.permissions;
+    }
+
+    public int getQuantity() {
+        return this.quantity;
     }
 
     public void deposit(int quantity) {
@@ -51,7 +46,31 @@ public class ItemClass implements Serializable {
         this.quantity = this.quantity - quantity;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getPermissionsInitials() {
+        StringBuilder strings = new StringBuilder();
+        for (int i = 0; i < this.getPermissions().size(); i++) {
+            final var initial = this.getPermissions().get(i).getInitials();
+            if (i > 0) {
+                strings.append(",");
+            }
+            strings.append(initial);
+        }
+        return strings.toString();
+    }
+
+    public String getPermissionsNames() {
+        StringBuilder strings = new StringBuilder();
+        for (int i = 0; i < this.getPermissions().size(); i++) {
+            final var name = this.getPermissions().get(i).getName();
+            if (i > 0) {
+                strings.append(",");
+            }
+            strings.append(name);
+        }
+        return strings.toString();
+    }
+
+    public void sortPermissions(){
+        this.permissions.sort(Comparator.comparingInt(PermissionClass::getOrder));
     }
 }
