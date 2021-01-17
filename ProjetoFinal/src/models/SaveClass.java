@@ -3,7 +3,7 @@ package models;
 import java.io.Serializable;
 import java.util.List;
 
-public class SaveClass implements Serializable {
+public class SaveClass implements Save, Serializable {
     private final List<EmployeeClass> employees;
     private final List<ClientClass> clients;
     private final List<LocalClass> locals;

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class TransactionClass implements Serializable {
+public class TransactionClass implements Transaction, Serializable {
     protected final int id;
     protected final ClientClass client;
     protected final LocalClass local;

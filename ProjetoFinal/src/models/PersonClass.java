@@ -2,7 +2,7 @@ package models;
 
 import java.io.Serializable;
 
-public class PersonClass implements Serializable {
+public class PersonClass implements Person, Serializable {
     protected final String name;
 
     public PersonClass(String name) {

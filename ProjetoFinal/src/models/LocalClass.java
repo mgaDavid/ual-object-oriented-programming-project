@@ -2,7 +2,7 @@ package models;
 
 import java.io.Serializable;
 
-public class LocalClass implements Serializable {
+public class LocalClass implements Local, Serializable {
     private final int id;
     private final String name;
 
