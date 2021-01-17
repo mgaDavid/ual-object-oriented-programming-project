@@ -6,26 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientClass extends PersonClass {
-    private static int classCounter;
     private final int id;
     public final EmployeeClass manager;
-    private int lastItem;
-    private List<ItemClass> items = new ArrayList<>();
-    private int lastDeposit;
-    private List<DepositClass> deposits = new ArrayList<>();
-    private int lastDelivery;
-    private List<DeliveryClass> deliveries = new ArrayList<>();
+    private final List<ItemClass> items = new ArrayList<>();
+    private final List<TransactionClass> deposits = new ArrayList<>();
+    private final List<TransactionClass> deliveries = new ArrayList<>();
 
-    public ClientClass(String name, EmployeeClass manager, List<ClientClass> existingClients) throws ExistingClientException {
+    public ClientClass(int id, String name, EmployeeClass manager) {
         super(name);
-
-        for (ClientClass client : existingClients) {
-            if (client.getName().equals(name)) {
-                throw new ExistingClientException();
-            }
-        }
+        this.id = id;
         this.manager = manager;
-        this.id = ++ClientClass.classCounter;
     }
 
     public int getId() {
@@ -36,43 +26,10 @@ public class ClientClass extends PersonClass {
         return this.manager;
     }
 
-    public static int getClassCounter() {
-        return ClientClass.classCounter;
-    }
-
     public List<ItemClass> getItems() {
         return items;
     }
 
-    public int getLastItem() {
-        return lastItem;
-    }
-
-    public int addOneItem() {
-        return ++this.lastItem;
-    }
-
-    public void addItem(String itemName, List<String> permissions) throws NonexistentPermissionException {
-        this.items.add(new ItemClass(itemName, this, permissions));
-    }
-
-    public int addOneDeposit() {
-        return ++this.lastDeposit;
-    }
-
-    public void addDeposit(LocalClass local, List<EmployeeClass> employees, List<DepositingItemClass> items) {
-
-        this.deposits.add(new DepositClass(this, local, employees, items));
-    }
-
-    public int addOneDelivery() {
-        return ++this.lastDelivery;
-    }
-
-    public void addDelivery(LocalClass local, List<EmployeeClass> employees, List<DeliveringItemClass> items) {
-        this.deliveries.add(new DeliveryClass(this, local, employees, items));
-    }
-    
     public ItemClass getItem(int id) throws ItemNotFoundException {
         for (ItemClass item : this.getItems()) {
             if (item.getId() == id) {
@@ -83,12 +40,62 @@ public class ClientClass extends PersonClass {
         throw new ItemNotFoundException();
     }
 
-    public DepositClass getLastDeposit() {
-        List<DepositClass> deposits = this.getDeposits();
-        return deposits.get(deposits.size() - 1);
+    public int getLastItemId() {
+        return this.getItems().size();
     }
 
-    public List<DepositClass> getDeposits() {
+    public void addItem(ItemClass item) {
+        this.items.add(item);
+    }
+
+    public List<TransactionClass> getDeposits() {
         return this.deposits;
+    }
+
+    public int getLastDepositId() {
+        return this.getDeposits().size();
+    }
+
+    public void addDeposit(TransactionClass deposit) {
+        this.deposits.add(deposit);
+        for (final var transactedItem: deposit.getItems()) {
+            final var item = transactedItem.getItem();
+            item.deposit(transactedItem.getTransactedQuantity());
+        }
+    }
+
+    public List<TransactionClass> getDeliveries() {
+        return this.deliveries;
+    }
+
+    public TransactionClass getDelivery(int id) throws DeliveryNotFoundException {
+        for (final var delivery : this.getDeliveries()) {
+            if (delivery.getId() == id) {
+                return delivery;
+            }
+        }
+        throw new DeliveryNotFoundException();
+    }
+
+    public int getLastDeliveryId() {
+        return this.getDeliveries().size();
+    }
+
+    public void addDelivery(TransactionClass delivery) {
+        this.deliveries.add(delivery);
+        for (final var transactedItem: delivery.getItems()) {
+            final var item = transactedItem.getItem();
+            item.remove(transactedItem.getTransactedQuantity());
+        }
+    }
+
+    public void sortItems(){
+        this.items.sort((item1, item2) -> {
+            int quantityCmp = Integer.compare(item2.getQuantity(), item1.getQuantity());
+            if (quantityCmp != 0) {
+                return quantityCmp;
+            }
+            return Integer.compare(item1.getId(), item2.getId());
+        });
     }
 }
