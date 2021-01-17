@@ -3,24 +3,19 @@ package models;
 import java.io.Serializable;
 
 public class LocalClass implements Serializable {
-    private static int classCounter;
-    private static int id;
+    private final int id;
     private final String name;
 
-    public LocalClass(String name) {
-        this.id = ++LocalClass.classCounter;
+    public LocalClass(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 
-    public static int getClassCounter() {
-        return classCounter;
-    }
-
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 }
