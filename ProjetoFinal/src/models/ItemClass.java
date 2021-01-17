@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
-public class ItemClass implements Serializable {
+public class ItemClass implements Item, Serializable {
     private final int id;
     private final String name;
     private final ClientClass client;

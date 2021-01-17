@@ -2,7 +2,7 @@ package models;
 
 import java.io.Serializable;
 
-public class PermissionClass implements Serializable {
+public class PermissionClass implements Permission, Serializable {
     private final int order;
     private final String initials;
     private final String name;

@@ -5,7 +5,7 @@ import exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientClass extends PersonClass {
+public class ClientClass extends PersonClass implements Client{
     private final int id;
     public final EmployeeClass manager;
     private final List<ItemClass> items = new ArrayList<>();

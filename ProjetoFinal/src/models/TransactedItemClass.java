@@ -2,7 +2,7 @@ package models;
 
 import java.io.Serializable;
 
-public class TransactedItemClass implements Serializable {
+public class TransactedItemClass implements TransactedItem, Serializable {
     private final ItemClass item;
     private final int transactedQuantity;
 

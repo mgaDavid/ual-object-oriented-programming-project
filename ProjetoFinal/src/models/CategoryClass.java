@@ -2,7 +2,7 @@ package models;
 
 import java.io.Serializable;
 
-public class CategoryClass implements Serializable {
+public class CategoryClass implements Category,Serializable {
     private final String categoryName;
     private final String description;
 
